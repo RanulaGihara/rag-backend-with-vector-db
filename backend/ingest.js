@@ -61,7 +61,7 @@ async function ingestData() {
       "Just testing the connection",
     );
     console.log(
-      `✅ Success! Gemini returned a vector with ${testVector.length} dimensions.`,
+      ` Success! Gemini returned a vector with ${testVector.length} dimensions.`,
     );
 
     if (testVector.length !== 3072) {
@@ -78,9 +78,9 @@ async function ingestData() {
       maxConcurrency: 5,
     });
 
-    console.log("✅ Ingestion Complete! Your semantic database is ready.");
+    console.log(" Ingestion Complete! Your semantic database is ready.");
   } catch (error) {
-    console.error("❌ Error during ingestion:");
+    console.error(" Error during ingestion:");
     console.error(error.message || error);
   }
 }
