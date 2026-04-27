@@ -110,6 +110,67 @@ app.post("/api/search", async (req, res) => {
   }
 });
 
+// ==========================================================
+// TRADITIONAL KEYWORD SEARCH DEMO (For Presentation)
+// ==========================================================
+
+// Simulating a standard MySQL/PostgreSQL legacy database
+const legacyDatabase = [
+  {
+    id: "HOTEL-001",
+    title: "Zen Lakeside Retreat",
+    description:
+      "A quiet, disconnected cabin in the woods. Perfect for meditation, morning yoga on the dock, and painting by the water. No loud noises, just nature and tranquility.",
+  },
+  {
+    id: "HOTEL-002",
+    title: "Urban Nightlife Hub",
+    description:
+      "Located right in the middle of the downtown club district. Surrounded by street food, loud music, and vibrant nightlife. Perfect for night owls looking to party.",
+  },
+  {
+    id: "HOTEL-003",
+    title: "Family Splash Resort",
+    description:
+      "A massive, high-energy resort packed with water slides, kid's clubs, and daily entertainment programs. Great for energetic families who want non-stop activities.",
+  },
+  {
+    id: "HOTEL-004",
+    title: "Historic Mountain Inn",
+    description:
+      "Cozy rooms with giant stone fireplaces and thick blankets. Ideal for couples looking for a romantic, snowy getaway with hot chocolate and reading by the fire.",
+  },
+];
+
+// Traditional Keyword Matching Endpoint
+app.post("/api/keyword-search", (req, res) => {
+  try {
+    const { query } = req.body;
+
+    if (!query) return res.status(400).json({ error: "Query required" });
+
+    console.log(`\n🔍 Received Legacy Keyword Query: "${query}"`);
+
+    const lowerQuery = query.toLowerCase();
+
+    // Simulating a basic exact-text match (The old way)
+    const matches = legacyDatabase.filter(
+      (hotel) =>
+        hotel.title.toLowerCase().includes(lowerQuery) ||
+        hotel.description.toLowerCase().includes(lowerQuery),
+    );
+
+    console.log(`Found ${matches.length} exact keyword matches.`);
+
+    res.json({
+      ai_answer: null, // Legacy search doesn't have an AI agent!
+      source_documents: matches,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Legacy DB Error" });
+  }
+});
+
 // Start the Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

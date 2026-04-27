@@ -7,6 +7,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // NEW: State to track which search engine we are using for the presentation
+  const [searchMode, setSearchMode] = useState("ai"); // 'ai' or 'keyword'
+
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query.trim()) return;
@@ -15,8 +18,14 @@ function App() {
     setError(null);
     setResult(null);
 
+    // NEW DYNAMIC ENDPOINT: Choose the API based on the selected mode
+    const endpoint =
+      searchMode === "ai"
+        ? "http://localhost:5000/api/search"
+        : "http://localhost:5000/api/keyword-search";
+
     try {
-      const res = await fetch("http://localhost:5000/api/search", {
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,16 +93,72 @@ function App() {
 
           {/* 3. The Full-Width AI Search Bar */}
           <div className="search-section">
+            {/* NEW: Presentation Toggle Tabs (Sits right above the search bar) */}
+            <div
+              className="search-mode-tabs"
+              style={{ display: "flex", gap: "10px", marginBottom: "10px" }}
+            >
+              <button
+                onClick={() => {
+                  setSearchMode("ai");
+                  setResult(null);
+                  setQuery("");
+                }}
+                style={{
+                  padding: "10px 20px",
+                  backgroundColor:
+                    searchMode === "ai" ? "#feba02" : "rgba(255,255,255,0.2)",
+                  color: searchMode === "ai" ? "#1a1a1a" : "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  transition: "0.2s",
+                }}
+              >
+                ✨ AI Semantic Search
+              </button>
+              <button
+                onClick={() => {
+                  setSearchMode("keyword");
+                  setResult(null);
+                  setQuery("");
+                }}
+                style={{
+                  padding: "10px 20px",
+                  backgroundColor:
+                    searchMode === "keyword"
+                      ? "#feba02"
+                      : "rgba(255,255,255,0.2)",
+                  color: searchMode === "keyword" ? "#1a1a1a" : "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  transition: "0.2s",
+                }}
+              >
+                🔍 Legacy Keyword Search
+              </button>
+            </div>
+
             <form onSubmit={handleSearch} className="search-form">
               <div className="search-inputs-wrapper">
                 {/* Main Semantic Input (Now takes 100% width) */}
                 <div className="input-box primary-input" style={{ flex: 1 }}>
-                  <span className="search-icon">✨</span>
+                  {/* Icon changes based on mode */}
+                  <span className="search-icon">
+                    {searchMode === "ai" ? "✨" : "🔍"}
+                  </span>
                   <input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Describe your perfect vibe: e.g., A quiet mountain cabin with a fireplace..."
+                    placeholder={
+                      searchMode === "ai"
+                        ? "Describe your perfect vibe: e.g., A quiet mountain cabin with a fireplace..."
+                        : "Exact match search: e.g., 'cabin', 'party', 'fire'"
+                    }
                     className="search-input"
                     disabled={isLoading}
                   />
@@ -103,8 +168,6 @@ function App() {
                     </span>
                   )}
                 </div>
-
-                {/* REMOVED Dummy Date and Guest selectors to give AI input full width */}
               </div>
 
               <button
@@ -208,17 +271,44 @@ function App() {
             Home {">"} Hotels {">"} Sri Lanka {">"} Search Results
           </div>
 
-          <div className="ai-banner">
-            <div className="ai-icon-wrapper">✨</div>
-            <div className="ai-content">
-              <h3 className="ai-title">AI Travel Expert Match</h3>
-              <p className="ai-text">{result.ai_answer}</p>
+          {/* NEW: Only show the AI Banner if it's an AI Search */}
+          {searchMode === "ai" && result.ai_answer && (
+            <div className="ai-banner">
+              <div className="ai-icon-wrapper">✨</div>
+              <div className="ai-content">
+                <h3 className="ai-title">AI Travel Expert Match</h3>
+                <p className="ai-text">{result.ai_answer}</p>
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* NEW: Show a warning if standard search finds nothing */}
+          {searchMode === "keyword" && result.source_documents.length === 0 && (
+            <div
+              className="ai-banner"
+              style={{ backgroundColor: "#ffebe8", borderColor: "#cc0000" }}
+            >
+              <div className="ai-icon-wrapper">⚠️</div>
+              <div className="ai-content">
+                <h3 className="ai-title" style={{ color: "#cc0000" }}>
+                  No Exact Matches Found
+                </h3>
+                <p className="ai-text">
+                  The legacy database requires exact keyword matches. Try
+                  searching for specific words like "cabin" or "resort".
+                </p>
+              </div>
+            </div>
+          )}
 
           {result.source_documents && result.source_documents.length > 0 && (
             <div className="listings-wrapper">
-              <h2 className="listings-header">Top matches for your request</h2>
+              {/* Dynamic Header */}
+              <h2 className="listings-header">
+                {searchMode === "ai"
+                  ? "Top matches for your request"
+                  : `Found ${result.source_documents.length} exact matches`}
+              </h2>
 
               {result.source_documents.map((doc, index) => (
                 <div key={index} className="hotel-card">
@@ -240,10 +330,30 @@ function App() {
                         Show on map
                       </p>
 
-                      <p className="hotel-description">
-                        <strong>AI Note:</strong> Selected based on your
-                        semantic search criteria. This property perfectly
-                        matches the experience you described.
+                      <p
+                        className="hotel-description"
+                        style={{
+                          borderLeftColor:
+                            searchMode === "ai" ? "#0071c2" : "#666",
+                        }}
+                      >
+                        {/* Dynamic Description Note */}
+                        {searchMode === "ai" ? (
+                          <span>
+                            <strong>✨ AI Note:</strong> Selected based on
+                            semantic meaning.
+                            <br />
+                            <br />
+                          </span>
+                        ) : (
+                          <span>
+                            <strong>🔍 Keyword Match:</strong> Contains exact
+                            phrase match.
+                            <br />
+                            <br />
+                          </span>
+                        )}
+                        "{doc.pageContent || doc.description}"
                       </p>
 
                       <div className="tags-container">

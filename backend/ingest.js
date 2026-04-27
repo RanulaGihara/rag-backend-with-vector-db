@@ -28,6 +28,12 @@ const mockHotelData = [
     description:
       "Cozy rooms with giant stone fireplaces and thick blankets. Ideal for couples looking for a romantic, snowy getaway with hot chocolate and reading by the fire.",
   },
+  {
+    id: "HOTEL-005",
+    title: "Hotel by nera Inn",
+    description:
+      "A beachfront hotel with a lively atmosphere, perfect for those who want to enjoy the sun, sand, and vibrant beach parties. Ideal for social butterflies and party-goers.",
+  },
 ];
 
 async function ingestData() {
