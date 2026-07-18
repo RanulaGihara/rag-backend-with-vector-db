@@ -1,12 +1,14 @@
 {
   "scripts": {
     "start": "node server.js",
-    "ingest": "node ingest.js"
+    "ingest": "node ingest.js",
+    "seed": "node scripts/seed.js"
   },
   "dependencies": {
     "@langchain/google-genai": "^2.1.26",
     "@langchain/pinecone": "^1.0.1",
     "@pinecone-database/pinecone": "^5.0.2",
+    "@supabase/supabase-js": "^2.110.7",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",

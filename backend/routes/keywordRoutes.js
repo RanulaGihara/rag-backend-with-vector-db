@@ -1,10 +1,10 @@
 const express = require("express");
-const legacyDatabase = require("../data/legacyDatabase");
+const supabase = require("../config/supabase");
 
 const router = express.Router();
 
-// Traditional Keyword Matching Endpoint
-router.post("/keyword-search", (req, res) => {
+// Traditional Keyword Matching Endpoint — now powered by Supabase
+router.post("/keyword-search", async (req, res) => {
   try {
     const { query } = req.body;
 
@@ -12,10 +12,19 @@ router.post("/keyword-search", (req, res) => {
 
     console.log(`\n  Received Legacy Keyword Query: "${query}"`);
 
-    const lowerQuery = query.toLowerCase();
+    // Query Supabase with case-insensitive LIKE matching on title and description
+    const { data: hotels, error } = await supabase
+      .from("hotels")
+      .select("*");
+
+    if (error) {
+      console.error("Supabase query error:", error.message);
+      return res.status(500).json({ error: "Database query failed" });
+    }
 
     // Simulating a basic exact-text match (The old way)
-    const matches = legacyDatabase.filter(
+    const lowerQuery = query.toLowerCase();
+    const matches = hotels.filter(
       (hotel) =>
         hotel.title.toLowerCase().includes(lowerQuery) ||
         hotel.description.toLowerCase().includes(lowerQuery),
@@ -28,6 +37,7 @@ router.post("/keyword-search", (req, res) => {
       source_documents: matches,
     });
   } catch (error) {
+    console.error("Keyword search error:", error);
     res.status(500).json({ error: "Legacy DB Error" });
   }
 });

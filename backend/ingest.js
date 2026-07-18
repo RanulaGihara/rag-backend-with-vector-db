@@ -2,17 +2,29 @@ require("dotenv").config();
 const { Pinecone } = require("@pinecone-database/pinecone");
 const { GoogleGenerativeAIEmbeddings } = require("@langchain/google-genai");
 const { PineconeStore } = require("@langchain/pinecone");
-const hotelData = require("./data/hotelData");
+const supabase = require("./config/supabase");
 
 async function ingestData() {
   console.log("Starting Data Ingestion Process...");
 
   try {
+    // Fetch hotel data from Supabase
+    console.log("Fetching hotel data from Supabase...");
+    const { data: hotelData, error } = await supabase
+      .from("hotels")
+      .select("*");
+
+    if (error) {
+      throw new Error(`Supabase fetch failed: ${error.message}`);
+    }
+
+    console.log(`  Fetched ${hotelData.length} hotels from Supabase.`);
+
     console.log("Connecting to Pinecone...");
     const pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY });
     const pineconeIndex = pc.index(process.env.PINECONE_INDEX_NAME);
 
-    console.log("Formatting legacy data into searchable documents...");
+    console.log("Formatting data into searchable documents...");
     const docs = hotelData.map((item) => ({
       pageContent: `Title: ${item.title}\nExperience Description: ${item.description}`,
       metadata: {
