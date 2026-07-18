@@ -14,7 +14,7 @@ router.post("/search", async (req, res) => {
       return res.status(400).json({ error: "Search query is required." });
     }
 
-    console.log(`\n🔍 Received Search Query: "${query}"`);
+    console.log(`\n Received Search Query: "${query}"`);
 
     // Step A: Vector Retrieval (Semantic Search)
     console.log("Searching Pinecone for the closest semantic matches...");
