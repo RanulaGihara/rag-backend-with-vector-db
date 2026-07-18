@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "start": "node server.js",
+    "ingest": "node ingest.js"
+  },
   "dependencies": {
     "@langchain/google-genai": "^2.1.26",
     "@langchain/pinecone": "^1.0.1",

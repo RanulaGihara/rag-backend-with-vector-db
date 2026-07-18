@@ -21,8 +21,8 @@ function App() {
     // NEW DYNAMIC ENDPOINT: Choose the API based on the selected mode
     const endpoint =
       searchMode === "ai"
-        ? "http://localhost:5000/api/search"
-        : "http://localhost:5000/api/keyword-search";
+        ? "http://localhost:5001/api/search"
+        : "http://localhost:5001/api/keyword-search";
 
     try {
       const res = await fetch(endpoint, {
@@ -312,10 +312,10 @@ function App() {
 
               {result.source_documents.map((doc, index) => (
                 <div key={index} className="hotel-card">
-                  {/* Real image instead of empty box */}
+                  {/* Unique image per hotel */}
                   <img
-                    src={`https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=500&q=80`}
-                    alt="Hotel"
+                    src={doc.image || `https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=500&q=80`}
+                    alt={doc.title}
                     className="card-image-img"
                   />
 

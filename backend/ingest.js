@@ -2,42 +2,10 @@ require("dotenv").config();
 const { Pinecone } = require("@pinecone-database/pinecone");
 const { GoogleGenerativeAIEmbeddings } = require("@langchain/google-genai");
 const { PineconeStore } = require("@langchain/pinecone");
-
-const mockHotelData = [
-  {
-    id: "HOTEL-001",
-    title: "Zen Lakeside Retreat",
-    description:
-      "A quiet, disconnected cabin in the woods. Perfect for meditation, morning yoga on the dock, and painting by the water. No loud noises, just nature and tranquility.",
-  },
-  {
-    id: "HOTEL-002",
-    title: "Urban Nightlife Hub",
-    description:
-      "Located right in the middle of the downtown club district. Surrounded by street food, loud music, and vibrant nightlife. Perfect for night owls looking to party.",
-  },
-  {
-    id: "HOTEL-003",
-    title: "Family Splash Resort",
-    description:
-      "A massive, high-energy resort packed with water slides, kid's clubs, and daily entertainment programs. Great for energetic families who want non-stop activities.",
-  },
-  {
-    id: "HOTEL-004",
-    title: "Historic Mountain Inn",
-    description:
-      "Cozy rooms with giant stone fireplaces and thick blankets. Ideal for couples looking for a romantic, snowy getaway with hot chocolate and reading by the fire.",
-  },
-  {
-    id: "HOTEL-005",
-    title: "Hotel by nera Inn",
-    description:
-      "A beachfront hotel with a lively atmosphere, perfect for those who want to enjoy the sun, sand, and vibrant beach parties. Ideal for social butterflies and party-goers.",
-  },
-];
+const hotelData = require("./data/hotelData");
 
 async function ingestData() {
-  console.log("🚀 Starting Data Ingestion Process...");
+  console.log("Starting Data Ingestion Process...");
 
   try {
     console.log("Connecting to Pinecone...");
@@ -45,11 +13,12 @@ async function ingestData() {
     const pineconeIndex = pc.index(process.env.PINECONE_INDEX_NAME);
 
     console.log("Formatting legacy data into searchable documents...");
-    const docs = mockHotelData.map((item) => ({
+    const docs = hotelData.map((item) => ({
       pageContent: `Title: ${item.title}\nExperience Description: ${item.description}`,
       metadata: {
         id: item.id,
         title: item.title,
+        image: item.image,
         type: "hotel_listing",
       },
     }));
