@@ -2,7 +2,8 @@
   "scripts": {
     "start": "node server.js",
     "ingest": "node ingest.js",
-    "seed": "node scripts/seed.js"
+    "seed": "node scripts/seed.js",
+    "loadtest": "k6 run --out csv=load-testing/results.csv load-testing/loadtest.js"
   },
   "dependencies": {
     "@langchain/google-genai": "^2.1.26",
