@@ -3,7 +3,7 @@ const supabase = require("../config/supabase");
 const hotelData = require("../data/hotelData");
 
 async function seed() {
-  console.log("🌱 Starting database seed...");
+  console.log(" Starting database seed...");
   console.log(`   Inserting ${hotelData.length} hotels into Supabase...\n`);
 
   // Upsert so the script is idempotent (safe to run multiple times)
