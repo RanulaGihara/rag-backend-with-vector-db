@@ -1,0 +1,21 @@
+{
+  "name": "rag-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "backend",
+    "frontend",
+    "frontend-car"
+  ],
+  "scripts": {
+    "build:core": "npm --workspace=rg-rag-core run build",
+    "build:backend": "npm --workspace=rag-backend run build",
+    "build": "npm run build:core && npm run build:backend",
+    "dev:backend": "npm --workspace=rag-backend run dev",
+    "dev:frontend": "npm --workspace=frontend run dev",
+    "dev:frontend-car": "npm --workspace=frontend-car run dev",
+    "ingest": "npm --workspace=rag-backend run ingest",
+    "seed": "npm --workspace=rag-backend run seed"
+  }
+}
