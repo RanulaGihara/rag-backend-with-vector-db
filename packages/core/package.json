@@ -1,6 +1,6 @@
 {
   "name": "rg-rag-core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Domain-agnostic Retrieval-Augmented Generation (RAG) engine core library for JavaScript & TypeScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,6 +8,14 @@
     "build": "tsc",
     "dev": "tsc --watch"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RanulaGihara/rg-rag-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RanulaGihara/rg-rag-core/issues"
+  },
+  "homepage": "https://github.com/RanulaGihara/rg-rag-core#readme",
   "keywords": [
     "rag",
     "retrieval-augmented-generation",
