@@ -5,44 +5,75 @@ const { pineconeIndex, embeddings, llm } = require("../config/ai");
 
 const router = express.Router();
 
-// The Semantic Search & RAG Endpoint
+// The Multi-Domain Semantic Search & RAG Endpoint
 router.post("/search", async (req, res) => {
   try {
-    const { query } = req.body;
+    const { query, domain = "hotel" } = req.body;
 
     if (!query) {
       return res.status(400).json({ error: "Search query is required." });
     }
 
-    console.log(`\n Received Search Query: "${query}"`);
+    const isCarDomain = domain === "car" || domain === "vehicle";
+    const targetType = isCarDomain ? "car_listing" : "hotel_listing";
 
-    // Step A: Vector Retrieval (Semantic Search)
-    console.log("Searching Pinecone for the closest semantic matches...");
+    console.log(`\n Received Multi-Domain Search Query [Domain: ${domain}]: "${query}"`);
+
+    // Step A: Vector Retrieval with Pinecone Metadata Filter
+    console.log(`Searching Pinecone for closest semantic matches with filter { type: "${targetType}" }...`);
     const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
       pineconeIndex,
     });
 
-    // Retrieve the top 2 closest matches
-    const searchResults = await vectorStore.similaritySearch(query, 2);
+    // Retrieve top 2 closest matches filtered by domain type
+    let searchResults = [];
+    try {
+      searchResults = await vectorStore.similaritySearch(query, 2, {
+        type: targetType,
+      });
+    } catch (filterErr) {
+      console.warn("  ⚠️ Pinecone filter query issue, falling back to unfiltered search:", filterErr.message);
+      const allResults = await vectorStore.similaritySearch(query, 5);
+      searchResults = allResults.filter((doc) => doc.metadata?.type === targetType).slice(0, 2);
+    }
 
     if (searchResults.length === 0) {
       return res.json({
-        ai_answer:
-          "I couldn't find any experiences matching your request in our current catalog.",
+        ai_answer: isCarDomain
+          ? "I couldn't find any rental vehicles matching your request in our fleet catalog."
+          : "I couldn't find any experiences matching your request in our current hotel catalog.",
         source_documents: [],
       });
     }
 
     // Step B: Prepare Context for RAG
-    // We combine the descriptions of the found hotels so the AI can read them
     const contextText = searchResults
       .map((doc) => doc.pageContent)
       .join("\n\n---\n\n");
-    const sourceDocuments = searchResults.map((doc) => doc.metadata); // The raw data for the React UI cards
+    const sourceDocuments = searchResults.map((doc) => doc.metadata);
 
-    // Step C: The RAG Prompt Engineering
-    // This is where we instruct the AI to act as an Experience Matchmaker
-    const promptTemplate = PromptTemplate.fromTemplate(`
+    // Step C: Multi-Domain Prompt Engineering
+    const promptTemplate = isCarDomain
+      ? PromptTemplate.fromTemplate(`
+            You are a highly skilled Car & Vehicle Mobility Specialist. 
+            A user is looking for a rental vehicle matching their specific travel vibe and requirements. 
+            
+            Read the provided "Available Vehicles" context carefully. 
+            Write a short, engaging response explaining why these specific vehicles are a perfect match for what they are looking for (highlight specs like category, seats, transmission, range/fuel, or driving vibe).
+            
+            STRICT RULES:
+            - Answer ONLY based on the provided context.
+            - Do not invent, hallucinate, or mention vehicles that are not in the context.
+            - If the context doesn't perfectly match the query, politely explain why it's the closest available option.
+            
+            User's Request: {query}
+            
+            Available Vehicles (Context):
+            {context}
+            
+            Your Vehicle Specialist Response:
+        `)
+      : PromptTemplate.fromTemplate(`
             You are a highly skilled Travel & Experience Matchmaker. 
             A user is looking for a specific type of experience. 
             
@@ -63,14 +94,14 @@ router.post("/search", async (req, res) => {
         `);
 
     // Step D: Generate the AI Response
-    console.log("Generating RAG Matchmaker response via Gemini 1.5 Flash...");
+    console.log(`Generating RAG response via Gemini for ${domain} domain...`);
     const formattedPrompt = await promptTemplate.format({
       context: contextText,
       query: query,
     });
     const aiResponse = await llm.invoke(formattedPrompt);
 
-    // Step E: Send the Payload Back to the Widget
+    // Step E: Send Payload Back
     console.log("Successfully generated response!");
     res.json({
       ai_answer: aiResponse.content,

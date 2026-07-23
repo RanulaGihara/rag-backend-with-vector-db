@@ -51,7 +51,7 @@ function App() {
       {/* 1. Global Navbar */}
       <nav className="navbar">
         <div className="fluid-container nav-top">
-          <div className="logo-text">Booking.com</div>
+          <div className="logo-text">Hotels.com</div>
           <div className="nav-actions">
             <span className="currency">LKR</span>
             <span className="language">🇬🇧</span>

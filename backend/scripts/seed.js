@@ -1,25 +1,34 @@
 require("dotenv").config();
 const supabase = require("../config/supabase");
 const hotelData = require("../data/hotelData");
+const seedCars = require("./seedCars");
 
 async function seed() {
-  console.log(" Starting database seed...");
-  console.log(`   Inserting ${hotelData.length} hotels into Supabase...\n`);
+  console.log(" Starting hotel database seed...");
+  console.log(`   Inserting ${hotelData.length} hotels into Supabase 'hotels' table...\n`);
 
-  // Upsert so the script is idempotent (safe to run multiple times)
+  // Upsert so the script is idempotent
   const { data, error } = await supabase
     .from("hotels")
     .upsert(hotelData, { onConflict: "id" })
     .select();
 
   if (error) {
-    console.error(" Seed failed:", error.message);
-    process.exit(1);
+    console.error(" Hotel seed failed:", error.message);
+  } else {
+    console.log(` Successfully seeded ${data.length} hotels into Supabase!\n`);
+    data.forEach((h) => console.log(`   ${h.id} — ${h.title}`));
   }
 
-  console.log(` Successfully seeded ${data.length} hotels into Supabase!\n`);
-  data.forEach((h) => console.log(`   ${h.id} — ${h.title}`));
-  console.log("\n🎉 Done!");
+  // Also trigger car seed automatically
+  console.log("\n----------------------------------------");
+  try {
+    await seedCars();
+  } catch (err) {
+    console.error("Car seed error:", err.message);
+  }
+
+  console.log("\n🎉 All database seeding complete!");
 }
 
 seed();

@@ -1,8 +1,11 @@
 {
+  "name": "rag-backend",
+  "version": "1.0.0",
   "scripts": {
     "start": "node server.js",
     "ingest": "node ingest.js",
     "seed": "node scripts/seed.js",
+    "seed:cars": "node scripts/seedCars.js",
     "loadtest": "k6 run --out csv=load-testing/results.csv load-testing/loadtest.js"
   },
   "dependencies": {
