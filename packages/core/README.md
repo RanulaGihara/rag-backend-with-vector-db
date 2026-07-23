@@ -10,7 +10,6 @@ A lightweight, domain-agnostic **Retrieval-Augmented Generation (RAG)** core eng
 
 ## 💡 Key Features
 
-- **Domain-Agnostic**: Zero hardcoded domain schemas (no hotels, cars, or specific tables). Works with any document dataset.
 - **Gemini Embeddings**: Automatic 3072-dimensional vector embedding generation using `gemini-embedding-001`.
 - **Pinecone Vector Database**: High-speed document vector upsert and metadata-filtered similarity retrieval.
 - **LLM Response Synthesis**: Smart context injection and factual response generation using Google Gemini (`gemini-3-flash-preview`).
