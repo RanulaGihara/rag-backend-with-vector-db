@@ -68,7 +68,6 @@ function App() {
       <nav className="navbar">
         <div className="fluid-container nav-top">
           <a href="#" className="brand-logo">
-            <span className="logo-icon">🌿</span>
             <span className="logo-text">AuraWellness</span>
             <span className="logo-tag">HOLISTIC RAG</span>
           </a>
@@ -85,7 +84,7 @@ function App() {
       <header className="hero">
         <div className="fluid-container hero-content">
           <div className="hero-badge">
-            ✨ Multi-Domain RAG Demo — Mindful Living Search
+            Multi-Domain RAG Demo — Mindful Living Search
           </div>
           <h1 className="hero-title">Nourish Your Body, Calm Your Mind</h1>
           <p className="hero-subtitle">
@@ -105,7 +104,7 @@ function App() {
                   setQuery("");
                 }}
               >
-                ✨ AI Mindful Matcher (RAG)
+                AI Mindful Matcher (RAG)
               </button>
               <button
                 type="button"
@@ -116,7 +115,7 @@ function App() {
                   setQuery("");
                 }}
               >
-                🔍 Legacy Keyword Search
+                Legacy Keyword Search
               </button>
             </div>
 
@@ -124,7 +123,7 @@ function App() {
             <form onSubmit={handleSearch} className="search-form">
               <div className="input-group">
                 <span className="input-icon">
-                  {searchMode === "ai" ? "🌿" : "🔍"}
+                  {searchMode === "ai" ? "AI" : "Search"}
                 </span>
                 <input
                   type="text"
@@ -146,7 +145,7 @@ function App() {
                       setResult(null);
                     }}
                   >
-                    ✕
+                    x
                   </span>
                 )}
               </div>
@@ -181,7 +180,7 @@ function App() {
       <main className="fluid-container" style={{ flex: 1, padding: "2.5rem 1.5rem" }}>
         {error && (
           <div className="error-banner">
-            <span>⚠️</span>
+            <span>[Error]</span>
             <div>{error}</div>
           </div>
         )}
@@ -190,7 +189,7 @@ function App() {
         {result && searchMode === "ai" && result.ai_answer && (
           <div className="ai-summary-card">
             <div className="ai-card-header">
-              <span className="ai-sparkle-badge">✨ GEMINI HOLISTIC CONCIERGE RECOMMENDATION</span>
+              <span className="ai-sparkle-badge">GEMINI HOLISTIC CONCIERGE RECOMMENDATION</span>
               <h2 className="ai-card-title">Mindful Wellness Guidance</h2>
             </div>
             <p className="ai-card-text">{result.ai_answer}</p>
@@ -200,9 +199,9 @@ function App() {
         {/* Legacy Keyword Search Warning */}
         {result && searchMode === "keyword" && result.source_documents.length === 0 && (
           <div className="legacy-warning-card">
-            <h3>⚠️ No Exact Keyword Matches Found</h3>
+            <h3>No Exact Keyword Matches Found</h3>
             <p style={{ marginTop: "4px" }}>
-              Legacy keyword search requires an exact text substring match in product titles or descriptions. Switch to <strong>✨ AI Mindful Matcher</strong> to search by natural health goals and emotional intent!
+              Legacy keyword search requires an exact text substring match in product titles or descriptions. Switch to <strong>AI Mindful Matcher</strong> to search by natural health goals and emotional intent!
             </p>
           </div>
         )}
@@ -235,7 +234,7 @@ function App() {
                     )}
                     {item.rating > 0 && (
                       <span className="wellness-rating-badge">
-                        ★ {item.rating}
+                        Rating: {item.rating} / 5
                       </span>
                     )}
                   </div>
@@ -245,7 +244,7 @@ function App() {
 
                     {item.mindful_benefit && (
                       <div className="mindful-benefit-pill">
-                        🌿 {item.mindful_benefit}
+                        Benefit: {item.mindful_benefit}
                       </div>
                     )}
 
@@ -255,8 +254,8 @@ function App() {
                       }`}
                     >
                       {searchMode === "ai"
-                        ? "✨ Semantic Vector Match: Matched based on emotional intent & wellness context."
-                        : "🔍 Keyword Match: Contains exact query term."}
+                        ? "Semantic Vector Match: Matched based on emotional intent & wellness context."
+                        : "Keyword Match: Contains exact query term."}
                     </div>
 
                     <p className="wellness-description">
@@ -271,7 +270,7 @@ function App() {
                         </span>
                       </div>
                       <button className="book-wellness-btn">
-                        Select Offering →
+                        Select Offering -&gt;
                       </button>
                     </div>
                   </div>
@@ -297,7 +296,7 @@ function App() {
                   alt="Mindful Retreats"
                 />
                 <div className="showcase-overlay">
-                  <div className="showcase-title">🧘 Sanctuary Retreats</div>
+                  <div className="showcase-title">Sanctuary Retreats</div>
                 </div>
               </div>
               <div
@@ -309,7 +308,7 @@ function App() {
                   alt="Aromatherapy"
                 />
                 <div className="showcase-overlay">
-                  <div className="showcase-title">🕯️ Sleep & Aromatherapy</div>
+                  <div className="showcase-title">Sleep & Aromatherapy</div>
                 </div>
               </div>
               <div
@@ -321,7 +320,7 @@ function App() {
                   alt="Sound Bath Spa"
                 />
                 <div className="showcase-overlay">
-                  <div className="showcase-title">💆 Sound Bath & Spa</div>
+                  <div className="showcase-title">Sound Bath & Spa</div>
                 </div>
               </div>
               <div
@@ -333,7 +332,7 @@ function App() {
                   alt="Botanical Supplements"
                 />
                 <div className="showcase-overlay">
-                  <div className="showcase-title">🍵 Organic Supplements</div>
+                  <div className="showcase-title">Organic Supplements</div>
                 </div>
               </div>
             </div>

@@ -34,7 +34,7 @@ async function seedCars() {
 
   console.log(` Successfully seeded ${data.length} vehicles into Supabase!\n`);
   data.forEach((c) => console.log(`   ${c.id} — ${c.title} (${c.category})`));
-  console.log("\n🎉 Vehicle seeding complete!");
+  console.log("\nVehicle seeding complete!");
 }
 
 if (require.main === module) {

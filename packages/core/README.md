@@ -8,7 +8,7 @@ A lightweight, domain-agnostic **Retrieval-Augmented Generation (RAG)** core eng
 
 ---
 
-## 💡 Key Features
+## Key Features
 
 - **Gemini Embeddings**: Automatic 3072-dimensional vector embedding generation using `gemini-embedding-001`.
 - **Pinecone Vector Database**: High-speed document vector upsert and metadata-filtered similarity retrieval.
@@ -17,7 +17,7 @@ A lightweight, domain-agnostic **Retrieval-Augmented Generation (RAG)** core eng
 
 ---
 
-## 📦 Installation
+## Installation
 
 ```bash
 npm install rg-rag-core
@@ -27,7 +27,7 @@ npm install rg-rag-core
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Configure Environment Variables
 
@@ -80,7 +80,7 @@ console.log(answer);
 
 ---
 
-## 📖 API Reference
+## API Reference
 
 ### `createRAGEngine(config: RAGConfig): RAGEngine`
 Factory function to instantiate a new `RAGEngine`.
@@ -111,6 +111,6 @@ Synthesizes a factual AI response strictly grounded in context.
 
 ---
 
-## 📄 License
+## License
 
 [MIT](LICENSE) © Ranula Gihara

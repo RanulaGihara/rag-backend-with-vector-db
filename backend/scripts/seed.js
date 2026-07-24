@@ -28,7 +28,7 @@ async function seed() {
     console.error("Car seed error:", err.message);
   }
 
-  console.log("\n🎉 All database seeding complete!");
+  console.log("\nAll database seeding complete!");
 }
 
 seed();

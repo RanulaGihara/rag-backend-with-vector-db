@@ -5,7 +5,7 @@ const supabaseKey = process.env.SUPABASE_ANON_KEY || "";
 
 if (!supabaseUrl || !supabaseKey) {
   console.warn(
-    "⚠️ Missing SUPABASE_URL or SUPABASE_ANON_KEY in environment variables."
+    "[WARNING] Missing SUPABASE_URL or SUPABASE_ANON_KEY in environment variables."
   );
 }
 

@@ -54,7 +54,7 @@ function App() {
           <div className="logo-text">Hotels.com</div>
           <div className="nav-actions">
             <span className="currency">LKR</span>
-            <span className="language">🇬🇧</span>
+            <span className="language">EN</span>
             <span className="list-property">List your property</span>
             <button className="nav-btn">Register</button>
             <button className="nav-btn">Sign in</button>
@@ -63,19 +63,19 @@ function App() {
         <div className="fluid-container nav-bottom">
           <div className="nav-links">
             <span className="nav-link active">
-              <span className="icon">🛏️</span> Stays
+              Stays
             </span>
             <span className="nav-link">
-              <span className="icon">✈️</span> Flights
+              Flights
             </span>
             <span className="nav-link">
-              <span className="icon">🚗</span> Car rental
+              Car rental
             </span>
             <span className="nav-link">
-              <span className="icon">🎡</span> Attractions
+              Attractions
             </span>
             <span className="nav-link">
-              <span className="icon">🚕</span> Airport taxis
+              Airport taxis
             </span>
           </div>
         </div>
@@ -116,7 +116,7 @@ function App() {
                   transition: "0.2s",
                 }}
               >
-                ✨ AI Semantic Search
+                AI Semantic Search
               </button>
               <button
                 onClick={() => {
@@ -138,7 +138,7 @@ function App() {
                   transition: "0.2s",
                 }}
               >
-                🔍 Legacy Keyword Search
+                Legacy Keyword Search
               </button>
             </div>
 
@@ -148,7 +148,7 @@ function App() {
                 <div className="input-box primary-input" style={{ flex: 1 }}>
                   {/* Icon changes based on mode */}
                   <span className="search-icon">
-                    {searchMode === "ai" ? "✨" : "🔍"}
+                    {searchMode === "ai" ? "AI" : "Search"}
                   </span>
                   <input
                     type="text"
@@ -164,7 +164,7 @@ function App() {
                   />
                   {query && (
                     <span className="clear-btn" onClick={() => setQuery("")}>
-                      ✕
+                      x
                     </span>
                   )}
                 </div>
@@ -274,7 +274,7 @@ function App() {
           {/* NEW: Only show the AI Banner if it's an AI Search */}
           {searchMode === "ai" && result.ai_answer && (
             <div className="ai-banner">
-              <div className="ai-icon-wrapper">✨</div>
+              <div className="ai-icon-wrapper">AI</div>
               <div className="ai-content">
                 <h3 className="ai-title">AI Travel Expert Match</h3>
                 <p className="ai-text">{result.ai_answer}</p>
@@ -288,7 +288,7 @@ function App() {
               className="ai-banner"
               style={{ backgroundColor: "#ffebe8", borderColor: "#cc0000" }}
             >
-              <div className="ai-icon-wrapper">⚠️</div>
+              <div className="ai-icon-wrapper">!</div>
               <div className="ai-content">
                 <h3 className="ai-title" style={{ color: "#cc0000" }}>
                   No Exact Matches Found
@@ -323,7 +323,7 @@ function App() {
                     <div className="card-main">
                       <div className="title-row">
                         <h3 className="hotel-title">{doc.title}</h3>
-                        <span className="stars">★★★★☆</span>
+                        <span className="stars">4.5 / 5</span>
                       </div>
                       <p className="hotel-location">
                         <span className="link-text">Excellent location</span> —
@@ -340,14 +340,14 @@ function App() {
                         {/* Dynamic Description Note */}
                         {searchMode === "ai" ? (
                           <span>
-                            <strong>✨ AI Note:</strong> Selected based on
+                            <strong>AI Note:</strong> Selected based on
                             semantic meaning.
                             <br />
                             <br />
                           </span>
                         ) : (
                           <span>
-                            <strong>🔍 Keyword Match:</strong> Contains exact
+                            <strong>Keyword Match:</strong> Contains exact
                             phrase match.
                             <br />
                             <br />

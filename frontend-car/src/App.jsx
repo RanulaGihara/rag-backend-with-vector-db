@@ -68,7 +68,6 @@ function App() {
       <nav className="navbar">
         <div className="fluid-container nav-top">
           <a href="#" className="brand-logo">
-            <span className="logo-icon">🏎️</span>
             <span className="logo-text">DriveVibe</span>
             <span className="logo-tag">CAR RENTALS</span>
           </a>
@@ -85,7 +84,7 @@ function App() {
       <header className="hero">
         <div className="fluid-container hero-content">
           <div className="hero-badge">
-            ⚡ Multi-Domain RAG Demo — Vehicle Search
+            Multi-Domain RAG Demo — Vehicle Search
           </div>
           <h1 className="hero-title">Find the Perfect Drive for Your Vibe</h1>
           <p className="hero-subtitle">
@@ -105,7 +104,7 @@ function App() {
                   setQuery("");
                 }}
               >
-                ✨ AI Semantic Matcher (RAG)
+                AI Semantic Matcher (RAG)
               </button>
               <button
                 type="button"
@@ -116,7 +115,7 @@ function App() {
                   setQuery("");
                 }}
               >
-                🔍 Legacy Keyword Search
+                Legacy Keyword Search
               </button>
             </div>
 
@@ -124,7 +123,7 @@ function App() {
             <form onSubmit={handleSearch} className="search-form">
               <div className="input-group">
                 <span className="input-icon">
-                  {searchMode === "ai" ? "✨" : "🔍"}
+                  {searchMode === "ai" ? "AI" : "Search"}
                 </span>
                 <input
                   type="text"
@@ -146,7 +145,7 @@ function App() {
                       setResult(null);
                     }}
                   >
-                    ✕
+                    x
                   </span>
                 )}
               </div>
@@ -181,7 +180,7 @@ function App() {
       <main className="fluid-container" style={{ flex: 1, padding: "2rem 1.5rem" }}>
         {error && (
           <div className="error-banner">
-            <span>⚠️</span>
+            <span>[Error]</span>
             <div>{error}</div>
           </div>
         )}
@@ -190,7 +189,7 @@ function App() {
         {result && searchMode === "ai" && result.ai_answer && (
           <div className="ai-summary-card">
             <div className="ai-card-header">
-              <span className="ai-sparkle-badge">✨ GEMINI RAG MATCHMAKER</span>
+              <span className="ai-sparkle-badge">GEMINI RAG MATCHMAKER</span>
               <h2 className="ai-card-title">AI Mobility Recommendation</h2>
             </div>
             <p className="ai-card-text">{result.ai_answer}</p>
@@ -200,9 +199,9 @@ function App() {
         {/* Legacy Keyword Search Warning */}
         {result && searchMode === "keyword" && result.source_documents.length === 0 && (
           <div className="legacy-warning-card">
-            <h3>⚠️ No Exact Keyword Matches Found</h3>
+            <h3>No Exact Keyword Matches Found</h3>
             <p style={{ marginTop: "4px" }}>
-              Legacy search requires an exact text substring match in vehicle titles or descriptions. Switch to <strong>✨ AI Semantic Matcher</strong> to query by vibe and natural intent!
+              Legacy search requires an exact text substring match in vehicle titles or descriptions. Switch to <strong>AI Semantic Matcher</strong> to query by vibe and natural intent!
             </p>
           </div>
         )}
@@ -245,16 +244,16 @@ function App() {
 
                     <div className="car-specs-row">
                       {car.seats && (
-                        <span className="spec-badge">💺 {car.seats} Seats</span>
+                        <span className="spec-badge">{car.seats} Seats</span>
                       )}
                       {car.transmission && (
-                        <span className="spec-badge">🕹️ {car.transmission}</span>
+                        <span className="spec-badge">{car.transmission}</span>
                       )}
                       {car.fuel_type && (
-                        <span className="spec-badge">⛽ {car.fuel_type}</span>
+                        <span className="spec-badge">{car.fuel_type}</span>
                       )}
                       {car.range_or_mpg && (
-                        <span className="spec-badge">📊 {car.range_or_mpg}</span>
+                        <span className="spec-badge">{car.range_or_mpg}</span>
                       )}
                     </div>
 
@@ -264,8 +263,8 @@ function App() {
                       }`}
                     >
                       {searchMode === "ai"
-                        ? "✨ Semantic Vector Match: Matched based on driving vibe and context."
-                        : "🔍 Keyword Match: Contains exact query term."}
+                        ? "Semantic Vector Match: Matched based on driving vibe and context."
+                        : "Keyword Match: Contains exact query term."}
                     </div>
 
                     <p className="car-description">
@@ -274,7 +273,7 @@ function App() {
 
                     <div className="car-card-footer">
                       <button className="book-car-btn">
-                        Reserve Vehicle →
+                        Reserve Vehicle -&gt;
                       </button>
                     </div>
                   </div>
@@ -300,7 +299,7 @@ function App() {
                   alt="Sports Luxury"
                 />
                 <div className="showcase-overlay">
-                  <div className="showcase-title">🏎️ Luxury Sports</div>
+                  <div className="showcase-title">Luxury Sports</div>
                 </div>
               </div>
               <div
@@ -312,7 +311,7 @@ function App() {
                   alt="Electric"
                 />
                 <div className="showcase-overlay">
-                  <div className="showcase-title">⚡ Electric Cruisers</div>
+                  <div className="showcase-title">Electric Cruisers</div>
                 </div>
               </div>
               <div
@@ -324,7 +323,7 @@ function App() {
                   alt="Off-Road"
                 />
                 <div className="showcase-overlay">
-                  <div className="showcase-title">🏔️ Off-Road Adventure</div>
+                  <div className="showcase-title">Off-Road Adventure</div>
                 </div>
               </div>
               <div
@@ -336,7 +335,7 @@ function App() {
                   alt="Family"
                 />
                 <div className="showcase-overlay">
-                  <div className="showcase-title">👨‍👩‍👧‍👦 Family Minivans</div>
+                  <div className="showcase-title">Family Minivans</div>
                 </div>
               </div>
             </div>
