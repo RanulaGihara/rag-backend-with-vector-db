@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "../../../lib/db/supabase";
 import { hotelData } from "../../../lib/db/hotelData";
 import { carData } from "../../../lib/db/carData";
+import { wellnessData } from "../../../lib/db/wellnessData";
 import { getRAGEngine } from "../../../services/ragService";
 import { VectorDocument } from "@rag/core";
 import { corsHeaders, handleOptions } from "../../../lib/cors";
@@ -34,7 +35,17 @@ export async function POST(req: NextRequest) {
       cars = carDbData;
     }
 
-    // 3. Transform domain data into generic VectorDocument format
+    // 3. Fetch Wellness Data
+    let wellness: any[] = [];
+    const { data: wellnessDbData, error: wellnessErr } = await supabase.from("wellness").select("*");
+    if (wellnessErr || !wellnessDbData || wellnessDbData.length === 0) {
+      console.warn("Supabase wellness fetch failed or empty. Using local wellness dataset fallback.");
+      wellness = wellnessData;
+    } else {
+      wellness = wellnessDbData;
+    }
+
+    // 4. Transform domain data into generic VectorDocument format
     const hotelDocs: VectorDocument[] = hotels.map((item) => ({
       id: String(item.id),
       text: `Title: ${item.title}\nExperience Description: ${item.description}`,
@@ -63,9 +74,24 @@ export async function POST(req: NextRequest) {
       },
     }));
 
-    const allDocs = [...hotelDocs, ...carDocs];
+    const wellnessDocs: VectorDocument[] = wellness.map((item) => ({
+      id: String(item.id),
+      text: `Title: ${item.title}\nProduct & Experience Description: ${item.description}\nCategory: ${item.category}\nMindful Benefit: ${item.mindful_benefit}`,
+      metadata: {
+        id: item.id,
+        title: item.title,
+        image: item.image,
+        type: "wellness_listing",
+        category: item.category || "",
+        price: item.price || 0,
+        rating: item.rating || 0,
+        mindful_benefit: item.mindful_benefit || "",
+      },
+    }));
 
-    // 4. Ingest using core RAG engine
+    const allDocs = [...hotelDocs, ...carDocs, ...wellnessDocs];
+
+    // 5. Ingest using core RAG engine
     const ragEngine = getRAGEngine();
     await ragEngine.ingest(allDocs);
 
@@ -76,6 +102,7 @@ export async function POST(req: NextRequest) {
           total: allDocs.length,
           hotels: hotelDocs.length,
           cars: carDocs.length,
+          wellness: wellnessDocs.length,
         },
       },
       { headers: corsHeaders() }
@@ -88,3 +115,4 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+

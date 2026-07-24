@@ -19,7 +19,14 @@ export async function POST(req: NextRequest) {
     }
 
     const isCarDomain = domain === "car" || domain === "vehicle";
-    const targetType = isCarDomain ? "car_listing" : "hotel_listing";
+    const isWellnessDomain = domain === "wellness";
+    
+    let targetType = "hotel_listing";
+    if (isCarDomain) {
+      targetType = "car_listing";
+    } else if (isWellnessDomain) {
+      targetType = "wellness_listing";
+    }
 
     console.log(`\nReceived Multi-Domain Search Query [Domain: ${domain}]: "${query}"`);
 
@@ -32,11 +39,16 @@ export async function POST(req: NextRequest) {
     });
 
     if (searchResults.length === 0) {
+      let noResultAnswer = "I couldn't find any experiences matching your request in our current hotel catalog.";
+      if (isCarDomain) {
+        noResultAnswer = "I couldn't find any rental vehicles matching your request in our fleet catalog.";
+      } else if (isWellnessDomain) {
+        noResultAnswer = "I couldn't find any wellness products, spa packages, or retreats matching your request in our mindfulness catalog.";
+      }
+
       return NextResponse.json(
         {
-          ai_answer: isCarDomain
-            ? "I couldn't find any rental vehicles matching your request in our fleet catalog."
-            : "I couldn't find any experiences matching your request in our current hotel catalog.",
+          ai_answer: noResultAnswer,
           source_documents: [],
         },
         { headers: corsHeaders() }
@@ -44,6 +56,26 @@ export async function POST(req: NextRequest) {
     }
 
     // 2. Application-layer Domain Prompt Engineering
+    const wellnessSystemPrompt = `
+You are a highly empathetic Holistic Wellness Concierge & Mindful Living Specialist. 
+A user is seeking wellness products, therapeutic spa packages, or mindful retreat experiences to improve their physical, emotional, and mental well-being.
+
+Read the provided "Available Wellness Offerings" context carefully. 
+Write a warm, compassionate, and inspiring response explaining why these specific wellness offerings are perfectly aligned with their desire for stress relief, deep relaxation, energy restoration, or mindful living (highlight mindful benefits, natural ingredients, and therapeutic features).
+
+STRICT RULES:
+- Answer ONLY based on the provided context.
+- Do not invent, hallucinate, or mention wellness offerings that are not in the context.
+- If the context doesn't perfectly match the query, gently explain why it's the closest holistic recommendation.
+
+User's Request: {query}
+
+Available Wellness Offerings (Context):
+{context}
+
+Your Holistic Wellness Concierge Response:
+`;
+
     const carSystemPrompt = `
 You are a highly skilled Car & Vehicle Mobility Specialist. 
 A user is looking for a rental vehicle matching their specific travel vibe and requirements. 
@@ -84,7 +116,12 @@ Available Hotels (Context):
 Your Matchmaker Response:
 `;
 
-    const systemPrompt = isCarDomain ? carSystemPrompt : hotelSystemPrompt;
+    let systemPrompt = hotelSystemPrompt;
+    if (isWellnessDomain) {
+      systemPrompt = wellnessSystemPrompt;
+    } else if (isCarDomain) {
+      systemPrompt = carSystemPrompt;
+    }
 
     // 3. Synthesize RAG response using core engine
     const aiAnswer = await ragEngine.generateRAGResponse(query, searchResults, {
@@ -108,3 +145,4 @@ Your Matchmaker Response:
     );
   }
 }
+

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "../../../lib/db/supabase";
 import { hotelData } from "../../../lib/db/hotelData";
 import { carData } from "../../../lib/db/carData";
+import { wellnessData } from "../../../lib/db/wellnessData";
 import { corsHeaders, handleOptions } from "../../../lib/cors";
 
 export async function OPTIONS() {
@@ -21,7 +22,14 @@ export async function POST(req: NextRequest) {
     }
 
     const isCarDomain = domain === "car" || domain === "vehicle";
-    const tableName = isCarDomain ? "cars" : "hotels";
+    const isWellnessDomain = domain === "wellness";
+
+    let tableName = "hotels";
+    if (isCarDomain) {
+      tableName = "cars";
+    } else if (isWellnessDomain) {
+      tableName = "wellness";
+    }
 
     console.log(`\nReceived Legacy Keyword Query [Domain: ${domain}]: "${query}"`);
 
@@ -30,7 +38,13 @@ export async function POST(req: NextRequest) {
 
     if (error || !dbItems || dbItems.length === 0) {
       console.warn(`Supabase '${tableName}' query issue or empty, using local dataset fallback.`);
-      items = isCarDomain ? carData : hotelData;
+      if (isCarDomain) {
+        items = carData;
+      } else if (isWellnessDomain) {
+        items = wellnessData;
+      } else {
+        items = hotelData;
+      }
     } else {
       items = dbItems;
     }
@@ -42,7 +56,8 @@ export async function POST(req: NextRequest) {
       const catMatch = item.category && item.category.toLowerCase().includes(lowerQuery);
       const transMatch = item.transmission && item.transmission.toLowerCase().includes(lowerQuery);
       const fuelMatch = item.fuel_type && item.fuel_type.toLowerCase().includes(lowerQuery);
-      return titleMatch || descMatch || catMatch || transMatch || fuelMatch;
+      const benefitMatch = item.mindful_benefit && item.mindful_benefit.toLowerCase().includes(lowerQuery);
+      return titleMatch || descMatch || catMatch || transMatch || fuelMatch || benefitMatch;
     });
 
     console.log(`Found ${matches.length} exact keyword matches in ${tableName}.`);
@@ -62,3 +77,4 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+

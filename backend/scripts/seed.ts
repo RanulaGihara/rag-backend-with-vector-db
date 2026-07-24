@@ -2,9 +2,10 @@ import "dotenv/config";
 import { supabase } from "../lib/db/supabase";
 import { hotelData } from "../lib/db/hotelData";
 import { carData } from "../lib/db/carData";
+import { wellnessData } from "../lib/db/wellnessData";
 
 async function seed() {
-  console.log("🌱 Starting Supabase multi-domain database seed...");
+  console.log("Starting Supabase multi-domain database seed...");
 
   // 1. Seed Hotels
   console.log(`   Inserting ${hotelData.length} hotels into 'hotels' table...`);
@@ -14,9 +15,9 @@ async function seed() {
     .select();
 
   if (hotelErr) {
-    console.error("❌ Hotel seed failed:", hotelErr.message);
+    console.error("[ERROR] Hotel seed failed:", hotelErr.message);
   } else {
-    console.log(`✅ Successfully seeded ${hotelRes.length} hotels into Supabase!`);
+    console.log(`[SUCCESS] Seeded ${hotelRes.length} hotels into Supabase.`);
   }
 
   // 2. Seed Cars
@@ -27,12 +28,27 @@ async function seed() {
     .select();
 
   if (carErr) {
-    console.error("❌ Car seed failed:", carErr.message);
+    console.error("[ERROR] Car seed failed:", carErr.message);
   } else {
-    console.log(`✅ Successfully seeded ${carRes.length} cars into Supabase!`);
+    console.log(`[SUCCESS] Seeded ${carRes.length} cars into Supabase.`);
   }
 
-  console.log("\n🎉 Database seeding complete!");
+  // 3. Seed Wellness
+  console.log(`   Inserting ${wellnessData.length} wellness items into 'wellness' table...`);
+  const { data: wellRes, error: wellErr } = await supabase
+    .from("wellness")
+    .upsert(wellnessData, { onConflict: "id" })
+    .select();
+
+  if (wellErr) {
+    console.error("[ERROR] Wellness seed failed:", wellErr.message);
+  } else {
+    console.log(`[SUCCESS] Seeded ${wellRes.length} wellness items into Supabase.`);
+  }
+
+  console.log("\nDatabase seeding complete!");
 }
 
 seed();
+
+

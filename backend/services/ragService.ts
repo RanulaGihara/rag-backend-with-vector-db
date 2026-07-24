@@ -10,7 +10,7 @@ export function getRAGEngine(): RAGEngine {
 
     if (!geminiApiKey || !pineconeApiKey || !pineconeIndexName) {
       console.warn(
-        "⚠️ Missing GOOGLE_API_KEY, PINECONE_API_KEY, or PINECONE_INDEX_NAME in environment variables."
+        "[WARNING] Missing GOOGLE_API_KEY, PINECONE_API_KEY, or PINECONE_INDEX_NAME in environment variables."
       );
     }
 

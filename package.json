@@ -6,16 +6,22 @@
     "packages/*",
     "backend",
     "frontend",
-    "frontend-car"
+    "frontend-car",
+    "frontend-wellness"
   ],
   "scripts": {
     "build:core": "npm --workspace=rg-rag-core run build",
     "build:backend": "npm --workspace=rag-backend run build",
-    "build": "npm run build:core && npm run build:backend",
+    "build:frontend": "npm --workspace=frontend run build",
+    "build:frontend-car": "npm --workspace=frontend-car run build",
+    "build:frontend-wellness": "npm --workspace=frontend-wellness run build",
+    "build": "npm run build:core && npm run build:backend && npm run build:frontend && npm run build:frontend-car && npm run build:frontend-wellness",
     "dev:backend": "npm --workspace=rag-backend run dev",
     "dev:frontend": "npm --workspace=frontend run dev",
     "dev:frontend-car": "npm --workspace=frontend-car run dev",
+    "dev:frontend-wellness": "npm --workspace=frontend-wellness run dev",
     "ingest": "npm --workspace=rag-backend run ingest",
-    "seed": "npm --workspace=rag-backend run seed"
+    "seed": "npm --workspace=rag-backend run seed",
+    "seed:wellness": "npm --workspace=rag-backend run seed:wellness"
   }
 }
