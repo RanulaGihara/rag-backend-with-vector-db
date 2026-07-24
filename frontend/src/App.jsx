@@ -148,7 +148,7 @@ function App() {
                 <div className="input-box primary-input" style={{ flex: 1 }}>
                   {/* Icon changes based on mode */}
                   <span className="search-icon">
-                    {searchMode === "ai" ? "AI" : "Search"}
+                    {searchMode === "ai" ? "AI" : "KW"}
                   </span>
                   <input
                     type="text"

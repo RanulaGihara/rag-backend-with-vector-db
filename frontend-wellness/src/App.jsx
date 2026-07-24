@@ -123,7 +123,7 @@ function App() {
             <form onSubmit={handleSearch} className="search-form">
               <div className="input-group">
                 <span className="input-icon">
-                  {searchMode === "ai" ? "AI" : "Search"}
+                  {searchMode === "ai" ? "AI" : "KW"}
                 </span>
                 <input
                   type="text"

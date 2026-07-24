@@ -247,15 +247,20 @@ body {
 
 .input-icon {
   position: absolute;
-  left: 1.2rem;
-  font-size: 1.2rem;
-  color: var(--text-muted);
+  left: 1.1rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--primary-sage);
+  background: var(--sage-light);
+  padding: 3px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
   pointer-events: none;
 }
 
 .search-input {
   width: 100%;
-  padding: 1rem 2.8rem 1rem 3.2rem;
+  padding: 1rem 2.8rem 1rem 3.6rem;
   border-radius: 30px;
   border: 1.5px solid var(--border-light);
   font-size: 0.95rem;
