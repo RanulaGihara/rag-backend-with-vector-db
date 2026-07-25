@@ -2,8 +2,8 @@
 
 > **MSc Research Thesis Project** — An empirical research evaluation of a domain-agnostic Retrieval-Augmented Generation (RAG) monorepo architecture leveraging Vector Databases (Pinecone) and LLMs (Google Gemini) compared against traditional relational keyword-based search across three distinct commercial domains (Hotel Booking, Car Rental, and Wellness Retreats).
 >
-> 🔗 **Monorepo GitHub Repository**: [`RanulaGihara/rag-backend-with-vector-db`](https://github.com/RanulaGihara/rag-backend-with-vector-db)  
-> 📦 **Published Core NPM Package**: [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core) | Standalone Core Repo: [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core)
+> **Monorepo GitHub Repository**: [`RanulaGihara/rag-backend-with-vector-db`](https://github.com/RanulaGihara/rag-backend-with-vector-db)  
+> **Published Core NPM Package**: [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core) | Standalone Core Repo: [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core)
 
 ---
 
@@ -47,7 +47,7 @@
 
 ---
 
-## 📦 Published Core NPM Library (`rg-rag-core`)
+## Published Core NPM Library (`rg-rag-core`)
 
 The core RAG engine has been extracted, modularized, and **published globally to NPM**. It has zero domain dependencies (no hardcoded hotel, car, or wellness schemas) and can be installed in any JavaScript/TypeScript project.
 
@@ -275,7 +275,7 @@ You can run the backend API server and frontends individually or in parallel usi
 
 All three frontend applications feature real-time **Speech-to-Text Voice Search** powered by the Web Speech API (`webkitSpeechRecognition` / `SpeechRecognition`).
 
-- **Usage**: Click the microphone icon (`🎤`) next to the search bar, speak your natural language prompt (e.g., *"Find me a tranquil cabin near a lake for meditation"*), and click search.
+- **Usage**: Click the microphone icon next to the search bar, speak your natural language prompt (e.g., *"Find me a tranquil cabin near a lake for meditation"*), and click search.
 - **Browser Compatibility**: Supported in Google Chrome, Microsoft Edge, and Apple Safari.
 
 ---
