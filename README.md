@@ -6,27 +6,6 @@
 
 ---
 
-## Examiner Verification & Submission Checklist
-
-This repository has been structured to strictly satisfy all academic submission guidelines issued for the MSc thesis project.
-
-| Lecturer Requirement | Status in Repository | File Path / Implementation Reference |
-| :--- | :---: | :--- |
-| **Complete Source Code** | Included | Monorepo ([`packages/core`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/packages/core), [`backend`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend), [`frontend`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/frontend), [`frontend-car`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/frontend-car), [`frontend-wellness`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/frontend-wellness)) |
-| **Published Core NPM Package** | Published | NPM: [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core)<br>GitHub Repo: [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core) |
-| **Model Ingestion & Evaluation Scripts** | Included | Vector Ingestion: [`backend/scripts/ingest.ts`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/scripts/ingest.ts)<br>k6 Benchmarking: [`backend/load-testing/loadtest.js`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/load-testing/loadtest.js) |
-| **Data Preprocessing Scripts** | Included | Seeding: [`backend/scripts/seed.ts`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/scripts/seed.ts)<br>Datasets: [`backend/lib/db/`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/lib/db) |
-| **Front-end, Back-end & Database** | Included | 3 React Frontends (`frontend*`), Next.js 14 Backend (`backend`), `rg-rag-core` Package (`packages/core`), Supabase PostgreSQL + Pinecone Vector DB |
-| **Database Schemas & Scripts** | Included | DDL Script: [`database/schema.sql`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/database/schema.sql)<br>Seeders: [`backend/scripts/seed.ts`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/scripts/seed.ts) |
-| **Test Files & Empirical Evidence** | Included | Load Test: [`backend/load-testing/loadtest.js`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/load-testing/loadtest.js)<br>Raw Metrics: [`backend/load-testing/results.csv`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/load-testing/results.csv)<br>Visualizer: [`backend/load-testing/visualize-results.html`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/load-testing/visualize-results.html) |
-| **Sample Input Data** | Included | Domain Datasets: [`hotelData.ts`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/lib/db/hotelData.ts), [`carData.ts`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/lib/db/carData.ts), [`wellnessData.ts`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/lib/db/wellnessData.ts) |
-| **API Integration Documentation** | Included | Documented below in [API Endpoints Reference](#api-endpoints-reference) |
-| **Configuration Files** | Included | `package.json`, `tsconfig.json`, `next.config.js`, `vite.config.js`, [`.env.example`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/.env.example), [`backend/.example.env`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/.example.env) |
-| **No Sensitive Data / Credentials** | Verified | `.env` files are `.gitignore`d; only sanitized `.example.env` templates are committed |
-
-> **Note on Model Training**: This project utilizes pre-trained cloud Large Language Models (Google Gemini 1.5/2.0 Flash) and Embedding Models (`text-embedding-004` / Gemini Embedding 001) via API integrations. Consequently, custom neural network training scripts are Not Applicable (N/A); instead, **Vector Space Data Ingestion** (`ingest.ts`) and **k6 Latency Benchmarking** (`loadtest.js`) fulfill the dataset preparation and empirical evaluation requirements.
-
----
 
 ## Monorepo Architecture Overview
 
