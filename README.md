@@ -2,31 +2,11 @@
 
 > **MSc Research Thesis Project** — An empirical research evaluation of a domain-agnostic Retrieval-Augmented Generation (RAG) monorepo architecture leveraging Vector Databases (Pinecone) and LLMs (Google Gemini) compared against traditional relational keyword-based search across three distinct commercial domains (Hotel Booking, Car Rental, and Wellness Retreats).
 >
-> 📦 **Core Engine NPM Package**: Published globally as [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core) | Standalone Repository: [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core)
+> **Monorepo GitHub Repository**: [`RanulaGihara/rag-backend-with-vector-db`](https://github.com/RanulaGihara/rag-backend-with-vector-db)  
+> **Published Core NPM Package**: [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core) | Standalone Core Repo: [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core)
 
 ---
 
-## Examiner Verification & Submission Checklist
-
-This repository has been structured to strictly satisfy all academic submission guidelines issued for the MSc thesis project.
-
-| Lecturer Requirement | Status in Repository | File Path / Implementation Reference |
-| :--- | :---: | :--- |
-| **Complete Source Code** | Included | Monorepo ([`packages/core`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/packages/core), [`backend`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend), [`frontend`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/frontend), [`frontend-car`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/frontend-car), [`frontend-wellness`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/frontend-wellness)) |
-| **Published Core NPM Package** | Published | NPM: [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core)<br>GitHub Repo: [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core) |
-| **Model Ingestion & Evaluation Scripts** | Included | Vector Ingestion: [`backend/scripts/ingest.ts`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/scripts/ingest.ts)<br>k6 Benchmarking: [`backend/load-testing/loadtest.js`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/load-testing/loadtest.js) |
-| **Data Preprocessing Scripts** | Included | Seeding: [`backend/scripts/seed.ts`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/scripts/seed.ts)<br>Datasets: [`backend/lib/db/`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/lib/db) |
-| **Front-end, Back-end & Database** | Included | 3 React Frontends (`frontend*`), Next.js 14 Backend (`backend`), `rg-rag-core` Package (`packages/core`), Supabase PostgreSQL + Pinecone Vector DB |
-| **Database Schemas & Scripts** | Included | DDL Script: [`database/schema.sql`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/database/schema.sql)<br>Seeders: [`backend/scripts/seed.ts`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/scripts/seed.ts) |
-| **Test Files & Empirical Evidence** | Included | Load Test: [`backend/load-testing/loadtest.js`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/load-testing/loadtest.js)<br>Raw Metrics: [`backend/load-testing/results.csv`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/load-testing/results.csv)<br>Visualizer: [`backend/load-testing/visualize-results.html`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/load-testing/visualize-results.html) |
-| **Sample Input Data** | Included | Domain Datasets: [`hotelData.ts`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/lib/db/hotelData.ts), [`carData.ts`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/lib/db/carData.ts), [`wellnessData.ts`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/lib/db/wellnessData.ts) |
-| **API Integration Documentation** | Included | Documented below in [API Endpoints Reference](#api-endpoints-reference) |
-| **Configuration Files** | Included | `package.json`, `tsconfig.json`, `next.config.js`, `vite.config.js`, [`.env.example`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/.env.example), [`backend/.example.env`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/.example.env) |
-| **No Sensitive Data / Credentials** | Verified | `.env` files are `.gitignore`d; only sanitized `.example.env` templates are committed |
-
-> **Note on Model Training**: This project utilizes pre-trained cloud Large Language Models (Google Gemini 1.5/2.0 Flash) and Embedding Models (`text-embedding-004` / Gemini Embedding 001) via API integrations. Consequently, custom neural network training scripts are Not Applicable (N/A); instead, **Vector Space Data Ingestion** (`ingest.ts`) and **k6 Latency Benchmarking** (`loadtest.js`) fulfill the dataset preparation and empirical evaluation requirements.
-
----
 
 ## Monorepo Architecture Overview
 
@@ -67,7 +47,7 @@ This repository has been structured to strictly satisfy all academic submission 
 
 ---
 
-## 📦 Published Core NPM Library (`rg-rag-core`)
+## Published Core NPM Library (`rg-rag-core`)
 
 The core RAG engine has been extracted, modularized, and **published globally to NPM**. It has zero domain dependencies (no hardcoded hotel, car, or wellness schemas) and can be installed in any JavaScript/TypeScript project.
 
@@ -83,40 +63,6 @@ To use the core RAG engine in any external Node.js, Express, Next.js, or React p
 npm install rg-rag-core dotenv
 ```
 
-#### 2. Usage Code Example
-```typescript
-import { createRAGEngine } from "rg-rag-core";
-
-// Initialize the RAG Engine with API Credentials
-const rag = createRAGEngine({
-  geminiApiKey: process.env.GOOGLE_API_KEY!,
-  pineconeApiKey: process.env.PINECONE_API_KEY!,
-  pineconeIndexName: process.env.PINECONE_INDEX_NAME!,
-});
-
-// Step 1: Ingest generic vector documents into Pinecone
-await rag.ingest([
-  {
-    id: "doc-01",
-    text: "Title: Product Support Guide\nDescription: Instructions for replacing parts...",
-    metadata: { category: "support", region: "US" }
-  }
-]);
-
-// Step 2: Perform semantic similarity search
-const searchResults = await rag.semanticSearch("How do I request replacement parts?", {
-  topK: 2,
-  filter: { category: "support" }
-});
-
-// Step 3: Synthesize AI response strictly grounded in context
-const response = await rag.generateRAGResponse(
-  "How do I request replacement parts?",
-  searchResults
-);
-
-console.log(response);
-```
 
 ---
 
@@ -218,7 +164,7 @@ npm install rg-rag-core
 
 ### Step 1: Execute SQL Schema (Supabase)
 
-Execute the DDL script in [`database/schema.sql`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/database/schema.sql) in your Supabase SQL Editor to create the `hotels`, `cars`, and `wellness` tables.
+Execute the DDL script in [`database/schema.sql`](database/schema.sql) in your Supabase SQL Editor to create the `hotels`, `cars`, and `wellness` tables.
 
 ### Step 2: Seed Relational Data (Supabase)
 
@@ -295,7 +241,7 @@ You can run the backend API server and frontends individually or in parallel usi
 
 All three frontend applications feature real-time **Speech-to-Text Voice Search** powered by the Web Speech API (`webkitSpeechRecognition` / `SpeechRecognition`).
 
-- **Usage**: Click the microphone icon (`🎤`) next to the search bar, speak your natural language prompt (e.g., *"Find me a tranquil cabin near a lake for meditation"*), and click search.
+- **Usage**: Click the microphone icon next to the search bar, speak your natural language prompt (e.g., *"Find me a tranquil cabin near a lake for meditation"*), and click search.
 - **Browser Compatibility**: Supported in Google Chrome, Microsoft Edge, and Apple Safari.
 
 ---
@@ -394,7 +340,7 @@ k6 run --out csv=results.csv loadtest.js
 
 ### 2. Visualize Benchmark Results
 
-Open [`backend/load-testing/visualize-results.html`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/load-testing/visualize-results.html) in your browser to view interactive Charts comparing:
+Open [`backend/load-testing/visualize-results.html`](backend/load-testing/visualize-results.html) in your browser to view interactive Charts comparing:
 - Mean and P95 Response Latency (RAG vs Keyword)
 - Throughput and Requests Per Second
 - Success vs Failure Error Rates
@@ -404,6 +350,7 @@ Open [`backend/load-testing/visualize-results.html`](file:///Users/ranulagihara/
 ## Academic Citation & License
 
 - **Thesis Author**: Ranula Gihara
-- **NPM Package**: [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core)
-- **Standalone Package Repository**: [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core)
+- **Monorepo Thesis Repository**: [`RanulaGihara/rag-backend-with-vector-db`](https://github.com/RanulaGihara/rag-backend-with-vector-db)
+- **Published Core NPM Package**: [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core)
+- **Standalone Core Engine Repository**: [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core)
 - **License**: MIT License
