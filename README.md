@@ -2,7 +2,8 @@
 
 > **MSc Research Thesis Project** — An empirical research evaluation of a domain-agnostic Retrieval-Augmented Generation (RAG) monorepo architecture leveraging Vector Databases (Pinecone) and LLMs (Google Gemini) compared against traditional relational keyword-based search across three distinct commercial domains (Hotel Booking, Car Rental, and Wellness Retreats).
 >
-> 📦 **Core Engine NPM Package**: Published globally as [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core) | Standalone Repository: [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core)
+> 🔗 **Monorepo GitHub Repository**: [`RanulaGihara/rag-backend-with-vector-db`](https://github.com/RanulaGihara/rag-backend-with-vector-db)  
+> 📦 **Published Core NPM Package**: [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core) | Standalone Core Repo: [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core)
 
 ---
 
@@ -383,6 +384,7 @@ Open [`backend/load-testing/visualize-results.html`](file:///Users/ranulagihara/
 ## Academic Citation & License
 
 - **Thesis Author**: Ranula Gihara
-- **NPM Package**: [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core)
-- **Standalone Package Repository**: [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core)
+- **Monorepo Thesis Repository**: [`RanulaGihara/rag-backend-with-vector-db`](https://github.com/RanulaGihara/rag-backend-with-vector-db)
+- **Published Core NPM Package**: [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core)
+- **Standalone Core Engine Repository**: [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core)
 - **License**: MIT License
