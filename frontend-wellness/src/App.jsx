@@ -69,6 +69,7 @@ function App() {
       <nav className="navbar">
         <div className="fluid-container nav-top">
           <a href="#" className="brand-logo">
+            <span className="logo-icon">🌿</span>
             <span className="logo-text">AuraWellness</span>
             <span className="logo-tag">HOLISTIC RAG</span>
           </a>
