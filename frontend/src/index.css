@@ -174,10 +174,6 @@ body {
 }
 
 .primary-input {
-  flex: 1.5;
-}
-
-.hidden-mobile {
   flex: 1;
 }
 
@@ -201,25 +197,33 @@ body {
   color: #1a1a1a;
   outline: none;
   font-weight: 500;
+  flex: 1;
 }
 
-.dummy-text {
-  color: #1a1a1a;
-  font-size: 0.95rem;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.dropdown-arrow {
+.input-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   margin-left: auto;
-  font-weight: bold;
+  flex-shrink: 0;
 }
 
 .clear-btn {
   cursor: pointer;
-  color: #666;
-  font-size: 1.2rem;
-  padding: 0 5px;
+  color: #888;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 4px 6px;
+  border-radius: 50%;
+  transition: color 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clear-btn:hover {
+  color: #1a1a1a;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .search-button {
@@ -528,3 +532,91 @@ body {
 .book-button:hover {
   background-color: #005691;
 }
+
+/* Voice Search Component Styling */
+.voice-search-wrapper {
+  margin-left: 6px;
+  position: relative;
+}
+
+.voice-search-btn {
+  background: transparent;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  position: relative;
+  outline: none;
+}
+
+.voice-search-btn:hover {
+  color: #0071c2;
+  background-color: rgba(0, 113, 194, 0.08);
+}
+
+.voice-search-btn.listening {
+  color: #dc2626;
+  background-color: rgba(220, 38, 38, 0.1);
+  animation: pulse-border 1.5s infinite;
+}
+
+.listening-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  border: 2px solid #dc2626;
+  animation: ripple 1.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+@keyframes pulse-border {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.listening-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #dc2626;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-left: 6px;
+  white-space: nowrap;
+  animation: fade-in 0.2s ease-in;
+}
+
+.voice-error-tooltip {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #1e293b;
+  color: white;
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 100;
+}
+

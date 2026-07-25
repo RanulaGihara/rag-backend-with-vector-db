@@ -1,4 +1,5 @@
 import { useState } from "react";
+import VoiceSearch from "./VoiceSearch";
 import "./index.css";
 
 const API_BASE_URL = "http://localhost:5001";
@@ -137,17 +138,23 @@ function App() {
                   className="search-input"
                   disabled={isLoading}
                 />
-                {query && (
-                  <span
-                    className="clear-icon"
-                    onClick={() => {
-                      setQuery("");
-                      setResult(null);
-                    }}
-                  >
-                    x
-                  </span>
-                )}
+                <div className="input-actions-right">
+                  {query && (
+                    <span
+                      className="clear-icon"
+                      onClick={() => {
+                        setQuery("");
+                        setResult(null);
+                      }}
+                    >
+                      ✕
+                    </span>
+                  )}
+                  <VoiceSearch
+                    onTranscript={(text) => setQuery(text)}
+                    disabled={isLoading}
+                  />
+                </div>
               </div>
               <button
                 type="submit"

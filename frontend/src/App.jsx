@@ -1,4 +1,5 @@
 import { useState } from "react";
+import VoiceSearch from "./VoiceSearch";
 import "./index.css";
 
 function App() {
@@ -162,11 +163,17 @@ function App() {
                     className="search-input"
                     disabled={isLoading}
                   />
-                  {query && (
-                    <span className="clear-btn" onClick={() => setQuery("")}>
-                      x
-                    </span>
-                  )}
+                  <div className="input-actions-right">
+                    {query && (
+                      <span className="clear-btn" onClick={() => setQuery("")}>
+                        ✕
+                      </span>
+                    )}
+                    <VoiceSearch
+                      onTranscript={(text) => setQuery(text)}
+                      disabled={isLoading}
+                    />
+                  </div>
                 </div>
               </div>
 
