@@ -182,9 +182,15 @@ body {
 }
 
 .search-icon {
-  font-size: 1.2rem;
+  font-size: 0.8rem;
+  font-weight: 800;
   margin-right: 12px;
-  color: #333;
+  color: #1a1a1a;
+  background: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
 }
 
 .search-input {

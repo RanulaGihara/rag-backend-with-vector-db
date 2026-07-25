@@ -1,9 +1,11 @@
-// ==========================================================
-// Master Hotel Dataset
-// Used by both the Pinecone vector ingestion and the legacy keyword search
-// ==========================================================
+export interface HotelItem {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+}
 
-const hotelData = [
+export const hotelData: HotelItem[] = [
   {
     id: "HOTEL-001",
     title: "Zen Lakeside Retreat",
@@ -85,5 +87,3 @@ const hotelData = [
       "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=500&q=80",
   },
 ];
-
-module.exports = hotelData;
