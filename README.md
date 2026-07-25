@@ -63,40 +63,6 @@ To use the core RAG engine in any external Node.js, Express, Next.js, or React p
 npm install rg-rag-core dotenv
 ```
 
-#### 2. Usage Code Example
-```typescript
-import { createRAGEngine } from "rg-rag-core";
-
-// Initialize the RAG Engine with API Credentials
-const rag = createRAGEngine({
-  geminiApiKey: process.env.GOOGLE_API_KEY!,
-  pineconeApiKey: process.env.PINECONE_API_KEY!,
-  pineconeIndexName: process.env.PINECONE_INDEX_NAME!,
-});
-
-// Step 1: Ingest generic vector documents into Pinecone
-await rag.ingest([
-  {
-    id: "doc-01",
-    text: "Title: Product Support Guide\nDescription: Instructions for replacing parts...",
-    metadata: { category: "support", region: "US" }
-  }
-]);
-
-// Step 2: Perform semantic similarity search
-const searchResults = await rag.semanticSearch("How do I request replacement parts?", {
-  topK: 2,
-  filter: { category: "support" }
-});
-
-// Step 3: Synthesize AI response strictly grounded in context
-const response = await rag.generateRAGResponse(
-  "How do I request replacement parts?",
-  searchResults
-);
-
-console.log(response);
-```
 
 ---
 
