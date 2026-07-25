@@ -164,7 +164,7 @@ npm install rg-rag-core
 
 ### Step 1: Execute SQL Schema (Supabase)
 
-Execute the DDL script in [`database/schema.sql`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/database/schema.sql) in your Supabase SQL Editor to create the `hotels`, `cars`, and `wellness` tables.
+Execute the DDL script in [`database/schema.sql`](database/schema.sql) in your Supabase SQL Editor to create the `hotels`, `cars`, and `wellness` tables.
 
 ### Step 2: Seed Relational Data (Supabase)
 
@@ -340,7 +340,7 @@ k6 run --out csv=results.csv loadtest.js
 
 ### 2. Visualize Benchmark Results
 
-Open [`backend/load-testing/visualize-results.html`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/load-testing/visualize-results.html) in your browser to view interactive Charts comparing:
+Open [`backend/load-testing/visualize-results.html`](backend/load-testing/visualize-results.html) in your browser to view interactive Charts comparing:
 - Mean and P95 Response Latency (RAG vs Keyword)
 - Throughput and Requests Per Second
 - Success vs Failure Error Rates
