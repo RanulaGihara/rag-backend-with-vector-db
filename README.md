@@ -1,6 +1,8 @@
 # Multi-Domain RAG Monorepo Architecture vs Traditional Keyword Search
 
 > **MSc Research Thesis Project** — An empirical research evaluation of a domain-agnostic Retrieval-Augmented Generation (RAG) monorepo architecture leveraging Vector Databases (Pinecone) and LLMs (Google Gemini) compared against traditional relational keyword-based search across three distinct commercial domains (Hotel Booking, Car Rental, and Wellness Retreats).
+>
+> 📦 **Core Engine NPM Package**: Published globally as [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core) | Standalone Repository: [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core)
 
 ---
 
@@ -10,7 +12,8 @@ This repository has been structured to strictly satisfy all academic submission 
 
 | Lecturer Requirement | Status in Repository | File Path / Implementation Reference |
 | :--- | :---: | :--- |
-| **Complete Source Code** | Included | Monorepo (`packages/core`, `backend`, `frontend`, `frontend-car`, `frontend-wellness`) |
+| **Complete Source Code** | Included | Monorepo ([`packages/core`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/packages/core), [`backend`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend), [`frontend`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/frontend), [`frontend-car`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/frontend-car), [`frontend-wellness`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/frontend-wellness)) |
+| **Published Core NPM Package** | Published | NPM: [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core)<br>GitHub Repo: [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core) |
 | **Model Ingestion & Evaluation Scripts** | Included | Vector Ingestion: [`backend/scripts/ingest.ts`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/scripts/ingest.ts)<br>k6 Benchmarking: [`backend/load-testing/loadtest.js`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/load-testing/loadtest.js) |
 | **Data Preprocessing Scripts** | Included | Seeding: [`backend/scripts/seed.ts`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/scripts/seed.ts)<br>Datasets: [`backend/lib/db/`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/lib/db) |
 | **Front-end, Back-end & Database** | Included | 3 React Frontends (`frontend*`), Next.js 14 Backend (`backend`), `rg-rag-core` Package (`packages/core`), Supabase PostgreSQL + Pinecone Vector DB |
@@ -43,7 +46,7 @@ This repository has been structured to strictly satisfy all academic submission 
                                    RAG Pipeline Route   Keyword Route
                                              │                   │
                                   ┌──────────▼──────────┐ ┌──────▼──────────┐
-                                  │   @rag/core NPM     │ │ Supabase Client │
+                                  │   rg-rag-core NPM   │ │ Supabase Client │
                                   │   Engine Package    │ └──────┬──────────┘
                                   └─────┬───────────┬───┘        │
                                         │           │            │
@@ -55,12 +58,65 @@ This repository has been structured to strictly satisfy all academic submission 
 
 ### Workspace Packages
 
-1. **`packages/core` (`rg-rag-core`)**: A reusable, domain-agnostic RAG engine library published/packaged internally. Handles document vectorization, Pinecone index querying, and Gemini LLM prompt construction with source attribution.
-2. **`backend` (`rag-backend`)**: A Next.js 14 API server serving multi-domain endpoints (`/api/search`, `/api/keyword`, `/api/ingest`). Coordinates database seeders, vector ingestion, and CORS handling for all frontends.
+1. **`packages/core` ([`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core))**: A standalone, domain-agnostic RAG engine library published globally to NPM as [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core) (v1.0.2) with source hosted at [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core). Encapsulates document vectorization, Pinecone index querying, and Gemini LLM response synthesis.
+2. **`backend` (`rag-backend`)**: A Next.js 14 API server serving multi-domain endpoints (`/api/search`, `/api/keyword`, `/api/ingest`). Coordinates database seeders, vector ingestion, and CORS handling for all frontends. Imports `rg-rag-core` as a core dependency.
 3. **`frontend`**: React 19 + Vite application providing comparative dual-search (RAG vs Keyword) and Web Speech API Voice Search for the **Hotel Recommendation** domain.
 4. **`frontend-car`**: React + Vite frontend tailored for the **Car Rental Recommendation** domain.
 5. **`frontend-wellness`**: React + Vite frontend tailored for the **Wellness & Mindful Retreats** domain.
 6. **`backend/load-testing`**: Benchmarking suite built with Grafana k6 and Chart.js HTML visualizer to evaluate performance under load.
+
+---
+
+## 📦 Published Core NPM Library (`rg-rag-core`)
+
+The core RAG engine has been extracted, modularized, and **published globally to NPM**. It has zero domain dependencies (no hardcoded hotel, car, or wellness schemas) and can be installed in any JavaScript/TypeScript project.
+
+- **NPM Package Registry**: [`https://www.npmjs.com/package/rg-rag-core`](https://www.npmjs.com/package/rg-rag-core)
+- **Standalone GitHub Repository**: [`https://github.com/RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core)
+
+### How to Install & Use in External Projects
+
+To use the core RAG engine in any external Node.js, Express, Next.js, or React project:
+
+#### 1. Install via NPM Command
+```bash
+npm install rg-rag-core dotenv
+```
+
+#### 2. Usage Code Example
+```typescript
+import { createRAGEngine } from "rg-rag-core";
+
+// Initialize the RAG Engine with API Credentials
+const rag = createRAGEngine({
+  geminiApiKey: process.env.GOOGLE_API_KEY!,
+  pineconeApiKey: process.env.PINECONE_API_KEY!,
+  pineconeIndexName: process.env.PINECONE_INDEX_NAME!,
+});
+
+// Step 1: Ingest generic vector documents into Pinecone
+await rag.ingest([
+  {
+    id: "doc-01",
+    text: "Title: Product Support Guide\nDescription: Instructions for replacing parts...",
+    metadata: { category: "support", region: "US" }
+  }
+]);
+
+// Step 2: Perform semantic similarity search
+const searchResults = await rag.semanticSearch("How do I request replacement parts?", {
+  topK: 2,
+  filter: { category: "support" }
+});
+
+// Step 3: Synthesize AI response strictly grounded in context
+const response = await rag.generateRAGResponse(
+  "How do I request replacement parts?",
+  searchResults
+);
+
+console.log(response);
+```
 
 ---
 
@@ -79,7 +135,7 @@ This repository has been structured to strictly satisfy all academic submission 
 
 | Layer | Technology | Description |
 | :--- | :--- | :--- |
-| **Core RAG Engine** | TypeScript, LangChain | `@langchain/google-genai`, `@langchain/pinecone` |
+| **Core RAG Engine** | TypeScript, LangChain | NPM: [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core) (`@langchain/google-genai`, `@langchain/pinecone`) |
 | **Backend Server** | Next.js 14 (App Router) | Node.js REST API server on port `5001` |
 | **Frontends** | React 19, Vite 8, CSS3 | Glassmorphic responsive UIs with Voice Input |
 | **LLM Model** | Google Gemini 1.5 / 2.0 Flash | Natural language answer generation |
@@ -95,7 +151,7 @@ This repository has been structured to strictly satisfy all academic submission 
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/RanulaGihara/rag-backend-with-vector-db.git
 cd rag-backend-with-vector-db
 ```
 
@@ -140,12 +196,20 @@ cd ..
 npm install
 ```
 
-### 4. Build the Core RAG Package
+### 4. Setup Options for Core RAG Engine
 
-Build the internal `@rag/core` TypeScript library before starting the services:
+#### Option A: Local Monorepo Workspace Setup (Development)
+The monorepo uses NPM workspaces to link `packages/core` (`rg-rag-core`) locally to the Next.js backend. To build the core library locally:
 
 ```bash
 npm run build:core
+```
+
+#### Option B: Install via Published NPM Package (Production / Other Projects)
+If setting up the backend or an external project to consume the published NPM package directly:
+
+```bash
+npm install rg-rag-core
 ```
 
 ---
@@ -178,7 +242,7 @@ Database seeding complete!
 
 ### Step 3: Ingest Vector Embeddings into Pinecone
 
-Generate 3072-dimensional vector embeddings using Google Gemini and upsert them to Pinecone:
+Generate 3072-dimensional vector embeddings using Google Gemini and upsert them to Pinecone via `rg-rag-core`:
 
 ```bash
 npm run ingest
@@ -298,114 +362,48 @@ Comparative endpoint. Uses exact case-insensitive substring matching against Sup
 
 ---
 
-### 3. `POST /api/ingest` — Programmatic Vector Ingestion Trigger
+### 3. `POST /api/ingest` — Multi-Domain Vector Ingestion Trigger
 
-Triggers multi-domain vector ingestion via HTTP request.
+Triggers bulk embedding generation and vector upserting into Pinecone using `rg-rag-core`.
 
-**Request Body**: `{}`
+**Response**:
+```json
+{
+  "message": "Ingestion complete!",
+  "stats": {
+    "total": 30,
+    "hotels": 10,
+    "cars": 10,
+    "wellness": 10
+  }
+}
+```
 
 ---
 
-## Performance Evaluation & Benchmarking
+## Load Testing & Empirical Benchmarking
 
-To fulfill the research thesis objective of empirically evaluating RAG vector search latency against traditional keyword filtering under concurrent load, an automated benchmark suite powered by **Grafana k6** is included.
+Empirical load testing is performed using Grafana k6 to measure latency (P95), throughput (RPS), and error rates under concurrent virtual user load comparing RAG vs. Keyword endpoints.
 
-### Test Setup & Configuration
-
-- **Peak Concurrent Users (VUs)**: 10 Virtual Users
-- **Load Ramp Profile**: `0 → 5 → 10 → 10 → 0 VUs` over ~60 seconds
-- **Query Dataset**: 15 natural-language query variations across domains.
-
-### Running the Load Test
-
-1. Ensure the backend API server is running on port `5001`:
-   ```bash
-   npm run dev:backend
-   ```
-2. In a separate terminal, execute the load test script:
-   ```bash
-   cd backend
-   npm run loadtest
-   ```
-   *Or execute via k6 CLI directly:*
-   ```bash
-   k6 run --out csv=load-testing/results.csv load-testing/loadtest.js
-   ```
-
-### Visualizing Benchmark Results
-
-Open the interactive HTML benchmark visualizer in any web browser:
+### 1. Execute Load Test Suite
 
 ```bash
-open backend/load-testing/visualize-results.html
+cd backend/load-testing
+k6 run --out csv=results.csv loadtest.js
 ```
 
-Upload or load `results.csv` to view:
-1. **Response Time Over Time**: Comparative latency curve (RAG vs Keyword).
-2. **Latency Distribution**: Bar chart comparing Min, Median, P95, and Max latencies.
-3. **Throughput & Concurrency**: Response time metrics under virtual user scaling.
+### 2. Visualize Benchmark Results
+
+Open [`backend/load-testing/visualize-results.html`](file:///Users/ranulagihara/Msc-%20research/rag-backend-with-vector-db/backend/load-testing/visualize-results.html) in your browser to view interactive Charts comparing:
+- Mean and P95 Response Latency (RAG vs Keyword)
+- Throughput and Requests Per Second
+- Success vs Failure Error Rates
 
 ---
 
-## Project File Structure
+## Academic Citation & License
 
-```
-rag-backend-with-vector-db/
-├── README.md                          # Primary research & examiner README
-├── .env.example                       # Root environment reference
-├── package.json                       # Monorepo root workspace configuration
-├── package-lock.json
-├── database/
-│   └── schema.sql                     # Supabase PostgreSQL DDL tables
-├── packages/
-│   └── core/                          # @rag/core internal package
-│       ├── package.json
-│       ├── tsconfig.json
-│       └── src/                       # Core RAG engine logic
-├── backend/                           # Next.js 14 API Server (:5001)
-│   ├── .example.env
-│   ├── package.json
-│   ├── app/
-│   │   └── api/
-│   │       ├── search/route.ts        # POST /api/search (RAG)
-│   │       ├── keyword/route.ts       # POST /api/keyword (Keyword)
-│   │       └── ingest/route.ts        # POST /api/ingest
-│   ├── lib/
-│   │   └── db/                        # Domain datasets & Supabase client
-│   │       ├── hotelData.ts
-│   │       ├── carData.ts
-│   │       ├── wellnessData.ts
-│   │       └── supabase.ts
-│   ├── scripts/
-│   │   ├── seed.ts                    # Supabase database seeder
-│   │   └── ingest.ts                  # Pinecone vector ingestion script
-│   └── load-testing/                  # Empirical performance evaluation
-│       ├── loadtest.js                # k6 load testing script
-│       ├── results.csv                # Raw metric output
-│       ├── load-test-results.json     # Benchmark JSON summary
-│       └── visualize-results.html     # Chart.js visualization report
-├── frontend/                          # Hotel Search React App (:5173)
-├── frontend-car/                      # Car Rental Search React App (:5174)
-└── frontend-wellness/                 # Wellness Search React App (:5175)
-```
-
----
-
-## Default Credentials & Test Accounts
-
-- **Authentication**: Unauthenticated for research demonstration and benchmarking purposes.
-- **API Keys**: Require user configuration in `backend/.env` as described in [Configuration](#2-configure-environment-variables).
-
----
-
-## Known Limitations
-
-1. **Cloud API Quotas**: Google Gemini AI and Pinecone free tier plans enforce rate limits (e.g. Requests Per Minute / Tokens Per Minute). Under heavy concurrent load testing, status `429 Too Many Requests` may be returned by the external provider.
-2. **Web Speech API Browser Dependencies**: Voice search relies on native browser Web Speech API implementations. Speech recognition availability varies on non-Chromium browsers.
-3. **Dataset Scale**: The demonstration dataset comprises 30 curated records across 3 domains (10 per domain) to fit free-tier database constraints while demonstrating multi-domain RAG adaptability.
-
----
-
-## License & Academic Disclaimer
-
-This project was developed as part of an MSc Research Thesis submission. All source code, benchmarking tools, and documentation are provided for academic evaluation.
+- **Thesis Author**: Ranula Gihara
+- **NPM Package**: [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core)
+- **Standalone Package Repository**: [`RanulaGihara/rg-rag-core`](https://github.com/RanulaGihara/rg-rag-core)
+- **License**: MIT License
