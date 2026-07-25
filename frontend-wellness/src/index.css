@@ -303,6 +303,7 @@ body {
   color: var(--text-dark);
   background: var(--sage-light);
 }
+}
 
 .search-submit-btn {
   background: var(--sage-dark);
@@ -652,7 +653,6 @@ body {
     padding: 0.9rem;
   }
 }
-
 /* Voice Search Component Styling (Wellness Theme) */
 .voice-search-wrapper {
   position: relative;
@@ -744,4 +744,3 @@ body {
   box-shadow: 0 8px 20px rgba(0,0,0,0.3);
   z-index: 100;
 }
-

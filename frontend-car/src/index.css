@@ -310,6 +310,7 @@ body {
   color: white;
   background: rgba(255, 255, 255, 0.1);
 }
+}
 
 .search-submit-btn {
   padding: 0 2rem;
@@ -662,7 +663,6 @@ body {
     padding: 0.85rem;
   }
 }
-
 /* Voice Search Component Styling (Car Theme) */
 .voice-search-wrapper {
   position: relative;
@@ -756,4 +756,3 @@ body {
   box-shadow: 0 8px 20px rgba(0,0,0,0.5);
   z-index: 100;
 }
-
