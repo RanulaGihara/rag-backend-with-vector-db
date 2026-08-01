@@ -36,13 +36,15 @@ const QUERIES = [
 ];
 
 // ─────────────────────────────────────────────────────────────
-// Load Stages — ramp to 30 VUs over ~60 seconds
+// Load Stages — Rate-Limit Compliant Research Benchmark
+// Ramps to max 5 VUs over ~55 seconds to strictly prevent
+// hitting LLM API tier rate limits while evaluating latency.
 // ─────────────────────────────────────────────────────────────
 export const options = {
   stages: [
-    { duration: "15s", target: 5 },  // Warm-up: ramp to 5 VUs
-    { duration: "15s", target: 10 }, // Scale-up: ramp to 10 VUs
-    { duration: "20s", target: 10 }, // Sustained peak: hold at 10 VUs
+    { duration: "10s", target: 2 },  // Warm-up: ramp to 2 VUs
+    { duration: "15s", target: 5 },  // Scale-up: ramp to 5 VUs
+    { duration: "20s", target: 5 },  // Sustained peak: hold at 5 VUs
     { duration: "10s", target: 0 },  // Cool-down: ramp back to 0
   ],
 };

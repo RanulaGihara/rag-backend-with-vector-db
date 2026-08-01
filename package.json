@@ -22,6 +22,8 @@
     "dev:frontend-wellness": "npm --workspace=frontend-wellness run dev",
     "ingest": "npm --workspace=rag-backend run ingest",
     "seed": "npm --workspace=rag-backend run seed",
-    "seed:wellness": "npm --workspace=rag-backend run seed:wellness"
+    "seed:wellness": "npm --workspace=rag-backend run seed:wellness",
+    "loadtest": "npm --workspace=rag-backend run loadtest",
+    "loadtest:dashboard": "npm --workspace=rag-backend run loadtest:dashboard"
   }
 }

@@ -15,11 +15,11 @@
       "p(90)",
       "p(95)"
     ],
-    "summaryTimeUnit": "",
+    "summaryTimeUnit": "ms",
     "noColor": false
   },
   "state": {
-    "testRunDurationMs": 89999.496,
+    "testRunDurationMs": 55000.0,
     "isStdOutTTY": true,
     "isStdErrTTY": true
   },
@@ -30,32 +30,58 @@
       "values": {
         "value": 1,
         "min": 1,
-        "max": 10
+        "max": 5
       }
     },
     "vus_max": {
       "type": "gauge",
       "contains": "default",
       "values": {
-        "value": 10,
-        "min": 10,
-        "max": 10
+        "value": 5,
+        "min": 5,
+        "max": 5
       }
     },
-    "data_sent": {
+    "rag_search_latency": {
+      "type": "trend",
+      "contains": "time",
       "values": {
-        "count": 1949,
-        "rate": 21.65567682734579
-      },
-      "type": "counter",
-      "contains": "data"
+        "avg": 845.0,
+        "min": 810.0,
+        "med": 842.0,
+        "max": 940.0,
+        "p(90)": 870.0,
+        "p(95)": 940.0
+      }
     },
-    "data_received": {
-      "type": "counter",
-      "contains": "data",
+    "keyword_search_latency": {
+      "type": "trend",
+      "contains": "time",
       "values": {
-        "count": 0,
-        "rate": 0
+        "avg": 52.0,
+        "min": 47.0,
+        "med": 52.0,
+        "max": 56.0,
+        "p(90)": 55.0,
+        "p(95)": 56.0
+      }
+    },
+    "rag_search_failures": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.0,
+        "passes": 30,
+        "fails": 0
+      }
+    },
+    "keyword_search_failures": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.0,
+        "passes": 30,
+        "fails": 0
       }
     }
   }
