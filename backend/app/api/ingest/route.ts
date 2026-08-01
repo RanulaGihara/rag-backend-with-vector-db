@@ -4,7 +4,7 @@ import { hotelData } from "../../../lib/db/hotelData";
 import { carData } from "../../../lib/db/carData";
 import { wellnessData } from "../../../lib/db/wellnessData";
 import { getRAGEngine } from "../../../services/ragService";
-import { VectorDocument } from "@rag/core";
+import { VectorDocument } from "rg-rag-core";
 import { corsHeaders, handleOptions } from "../../../lib/cors";
 
 export async function OPTIONS() {

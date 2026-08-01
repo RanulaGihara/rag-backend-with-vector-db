@@ -1,4 +1,4 @@
-import { createRAGEngine, RAGEngine } from "@rag/core";
+import { createRAGEngine, RAGEngine } from "rg-rag-core";
 
 let ragEngineInstance: RAGEngine | null = null;
 
