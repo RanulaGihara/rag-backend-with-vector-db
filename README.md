@@ -7,7 +7,6 @@
 
 ---
 
-
 ## Monorepo Architecture Overview
 
 ```
@@ -59,10 +58,10 @@ The core RAG engine has been extracted, modularized, and **published globally to
 To use the core RAG engine in any external Node.js, Express, Next.js, or React project:
 
 #### 1. Install via NPM Command
+
 ```bash
 npm install rg-rag-core dotenv
 ```
-
 
 ---
 
@@ -79,16 +78,16 @@ npm install rg-rag-core dotenv
 
 ### Tech Stack & Frameworks
 
-| Layer | Technology | Description |
-| :--- | :--- | :--- |
-| **Core RAG Engine** | TypeScript, LangChain | NPM: [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core) (`@langchain/google-genai`, `@langchain/pinecone`) |
-| **Backend Server** | Next.js 14 (App Router) | Node.js REST API server on port `5001` |
-| **Frontends** | React 19, Vite 8, CSS3 | Glassmorphic responsive UIs with Voice Input |
-| **LLM Model** | Google Gemini 1.5 / 2.0 Flash | Natural language answer generation |
-| **Embedding Model** | Gemini `text-embedding-004` | 3072-dimensional vector embeddings |
-| **Vector DB** | Pinecone Vector Database | High-dimensional similarity search (Cosine metric) |
-| **Relational DB** | Supabase (PostgreSQL) | Standard SQL database for exact keyword matching |
-| **Benchmarking** | Grafana k6, Chart.js | Latency, throughput, and P95 response testing |
+| Layer               | Technology                    | Description                                                                                                        |
+| :------------------ | :---------------------------- | :----------------------------------------------------------------------------------------------------------------- |
+| **Core RAG Engine** | TypeScript, LangChain         | NPM: [`rg-rag-core`](https://www.npmjs.com/package/rg-rag-core) (`@langchain/google-genai`, `@langchain/pinecone`) |
+| **Backend Server**  | Next.js 14 (App Router)       | Node.js REST API server on port `5001`                                                                             |
+| **Frontends**       | React 19, Vite 8, CSS3        | Glassmorphic responsive UIs with Voice Input                                                                       |
+| **LLM Model**       | Google Gemini 1.5 / 2.0 Flash | Natural language answer generation                                                                                 |
+| **Embedding Model** | Gemini `text-embedding-004`   | 3072-dimensional vector embeddings                                                                                 |
+| **Vector DB**       | Pinecone Vector Database      | High-dimensional similarity search (Cosine metric)                                                                 |
+| **Relational DB**   | Supabase (PostgreSQL)         | Standard SQL database for exact keyword matching                                                                   |
+| **Benchmarking**    | Grafana k6, Chart.js          | Latency, throughput, and P95 response testing                                                                      |
 
 ---
 
@@ -129,6 +128,7 @@ SUPABASE_ANON_KEY=your_supabase_anon_key_here
 ```
 
 > **Obtaining Free API Keys**:
+>
 > - **Google Gemini**: Obtain an API key from [Google AI Studio](https://aistudio.google.com/).
 > - **Pinecone**: Create an index with **3072 dimensions** and **Cosine** metric at [Pinecone Console](https://app.pinecone.io/).
 > - **Supabase**: Create a free PostgreSQL database project at [Supabase Dashboard](https://supabase.com/).
@@ -145,6 +145,7 @@ npm install
 ### 4. Setup Options for Core RAG Engine
 
 #### Option A: Local Monorepo Workspace Setup (Development)
+
 The monorepo uses NPM workspaces to link `packages/core` (`rg-rag-core`) locally to the Next.js backend. To build the core library locally:
 
 ```bash
@@ -152,6 +153,7 @@ npm run build:core
 ```
 
 #### Option B: Install via Published NPM Package (Production / Other Projects)
+
 If setting up the backend or an external project to consume the published NPM package directly:
 
 ```bash
@@ -175,6 +177,7 @@ npm run seed
 ```
 
 Output:
+
 ```
 Starting Supabase multi-domain database seed...
    Inserting 10 hotels into 'hotels' table...
@@ -195,11 +198,20 @@ npm run ingest
 ```
 
 Output:
+
 ```
 Starting Multi-Domain Vector Ingestion CLI...
   Formatting total 30 documents (10 hotels, 10 cars, 10 wellness items)...
 Vector Ingestion process finished successfully!
 ```
+
+> Each ingested record is tagged with a domain metadata type so the backend can route searches correctly for each frontend:
+>
+> - `hotel_listing` for hotel data
+> - `car_listing` for car data
+> - `wellness_listing` for wellness data
+>
+> In this demo setup, all three domains are ingested into the same Pinecone index, and the backend filters by these metadata types during search.
 
 ---
 
@@ -228,12 +240,12 @@ You can run the backend API server and frontends individually or in parallel usi
 
 ### Access Ports Overview
 
-| Component | URL | Description |
-| :--- | :--- | :--- |
-| **Backend API** | `http://localhost:5001` | Unified Next.js API Server |
-| **Hotel Search UI** | `http://localhost:5173` | Hotel RAG & Keyword Search UI |
-| **Car Rental UI** | `http://localhost:5174` | Vehicle Rental RAG Search UI |
-| **Wellness UI** | `http://localhost:5175` | Mindful Retreats RAG Search UI |
+| Component           | URL                     | Description                    |
+| :------------------ | :---------------------- | :----------------------------- |
+| **Backend API**     | `http://localhost:5001` | Unified Next.js API Server     |
+| **Hotel Search UI** | `http://localhost:5173` | Hotel RAG & Keyword Search UI  |
+| **Car Rental UI**   | `http://localhost:5174` | Vehicle Rental RAG Search UI   |
+| **Wellness UI**     | `http://localhost:5175` | Mindful Retreats RAG Search UI |
 
 ---
 
@@ -241,7 +253,7 @@ You can run the backend API server and frontends individually or in parallel usi
 
 All three frontend applications feature real-time **Speech-to-Text Voice Search** powered by the Web Speech API (`webkitSpeechRecognition` / `SpeechRecognition`).
 
-- **Usage**: Click the microphone icon next to the search bar, speak your natural language prompt (e.g., *"Find me a tranquil cabin near a lake for meditation"*), and click search.
+- **Usage**: Click the microphone icon next to the search bar, speak your natural language prompt (e.g., _"Find me a tranquil cabin near a lake for meditation"_), and click search.
 - **Browser Compatibility**: Supported in Google Chrome, Microsoft Edge, and Apple Safari.
 
 ---
@@ -255,15 +267,18 @@ The core RAG endpoint. Converts user query to vector embeddings via Gemini, perf
 **Request Header**: `Content-Type: application/json`
 
 **Request Body**:
+
 ```json
 {
   "query": "I want a quiet cabin near water for yoga and meditation",
   "domain": "hotel"
 }
 ```
-*(Valid `domain` values: `"hotel"`, `"car"`, `"wellness"`)*
+
+_(Valid `domain` values: `"hotel"`, `"car"`, `"wellness"`)_
 
 **Response**:
+
 ```json
 {
   "ai_answer": "Based on your request for tranquility and meditation, I recommend the Zen Lakeside Retreat...",
@@ -284,6 +299,7 @@ The core RAG endpoint. Converts user query to vector embeddings via Gemini, perf
 Comparative endpoint. Uses exact case-insensitive substring matching against Supabase PostgreSQL database tables.
 
 **Request Body**:
+
 ```json
 {
   "query": "electric",
@@ -292,6 +308,7 @@ Comparative endpoint. Uses exact case-insensitive substring matching against Sup
 ```
 
 **Response**:
+
 ```json
 {
   "ai_answer": null,
@@ -313,6 +330,7 @@ Comparative endpoint. Uses exact case-insensitive substring matching against Sup
 Triggers bulk embedding generation and vector upserting into Pinecone using `rg-rag-core`.
 
 **Response**:
+
 ```json
 {
   "message": "Ingestion complete!",
@@ -372,6 +390,7 @@ open visualize-results.html
 ### 3. Quantitative Results Dashboard
 
 Opening [`backend/load-testing/visualize-results.html`](backend/load-testing/visualize-results.html) renders an interactive Chart.js evaluation dashboard displaying:
+
 - **RAG Avg Latency** (`845 ms`) vs **Keyword Avg Latency** (`52 ms`)
 - **P95 Response Latency** (`940 ms`) proving sub-second generative AI reliability
 - **Controlled 5 VUs Concurrency** maintaining rate-limit compliance (0% error rate)
