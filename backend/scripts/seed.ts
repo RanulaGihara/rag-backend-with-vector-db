@@ -7,7 +7,7 @@ import { wellnessData } from "../lib/db/wellnessData";
 async function seed() {
   console.log("Starting Supabase multi-domain database seed...");
 
-  // 1. Seed Hotels
+  // Seed Hotels
   console.log(`   Inserting ${hotelData.length} hotels into 'hotels' table...`);
   const { data: hotelRes, error: hotelErr } = await supabase
     .from("hotels")
@@ -20,7 +20,7 @@ async function seed() {
     console.log(`[SUCCESS] Seeded ${hotelRes.length} hotels into Supabase.`);
   }
 
-  // 2. Seed Cars
+  // Seed Cars
   console.log(`   Inserting ${carData.length} vehicles into 'cars' table...`);
   const { data: carRes, error: carErr } = await supabase
     .from("cars")
@@ -33,7 +33,7 @@ async function seed() {
     console.log(`[SUCCESS] Seeded ${carRes.length} cars into Supabase.`);
   }
 
-  // 3. Seed Wellness
+  // Seed Wellness
   console.log(`   Inserting ${wellnessData.length} wellness items into 'wellness' table...`);
   const { data: wellRes, error: wellErr } = await supabase
     .from("wellness")

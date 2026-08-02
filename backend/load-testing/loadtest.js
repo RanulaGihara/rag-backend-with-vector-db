@@ -1,22 +1,15 @@
 import http from "k6/http";
 import { check, sleep } from "k6";
 import { Rate, Trend } from "k6/metrics";
+import { textSummary } from "https://jslib.k6.io/k6-summary/0.1.0/index.js";
 
-// ─────────────────────────────────────────────────────────────
-// Custom Metrics  (these appear in the k6 summary table)
-// ─────────────────────────────────────────────────────────────
-const ragLatency = new Trend("rag_search_latency", true); // milliseconds
+const ragLatency = new Trend("rag_search_latency", true);
 const keywordLatency = new Trend("keyword_search_latency", true);
 const ragFailRate = new Rate("rag_search_failures");
 const keywordFailRate = new Rate("keyword_search_failures");
 
-// ─────────────────────────────────────────────────────────────
-// Test Configuration
-// ─────────────────────────────────────────────────────────────
 const BASE_URL = __ENV.BASE_URL || "http://localhost:5001";
 
-// A pool of diverse, natural-language queries that exercise
-// both the Pinecone vector search and the Gemini LLM generation.
 const QUERIES = [
   "I want a peaceful place near a lake for meditation",
   "Looking for a hotel with great nightlife and parties",
@@ -35,41 +28,28 @@ const QUERIES = [
   "Beachfront accommodation with sunset walks",
 ];
 
-// ─────────────────────────────────────────────────────────────
-// Load Stages — Rate-Limit Compliant Research Benchmark
-// Ramps to max 5 VUs over ~55 seconds to strictly prevent
-// hitting LLM API tier rate limits while evaluating latency.
-// ─────────────────────────────────────────────────────────────
 export const options = {
   stages: [
-    { duration: "10s", target: 2 },  // Warm-up: ramp to 2 VUs
-    { duration: "15s", target: 5 },  // Scale-up: ramp to 5 VUs
-    { duration: "20s", target: 5 },  // Sustained peak: hold at 5 VUs
-    { duration: "10s", target: 0 },  // Cool-down: ramp back to 0
+    { duration: "10s", target: 2 },
+    { duration: "15s", target: 5 },
+    { duration: "20s", target: 5 },
+    { duration: "10s", target: 0 },
   ],
 };
 
-// ─────────────────────────────────────────────────────────────
-// Helper — pick a random query from the pool
-// ─────────────────────────────────────────────────────────────
 function randomQuery() {
   return QUERIES[Math.floor(Math.random() * QUERIES.length)];
 }
 
-// ─────────────────────────────────────────────────────────────
-// Main Test Function (executed per VU iteration)
-// ─────────────────────────────────────────────────────────────
 export default function () {
   const headers = { "Content-Type": "application/json" };
   const query = randomQuery();
   const payload = JSON.stringify({ query });
 
-  // ── 1. RAG Semantic Search (POST /api/search) ────────────
-  //    This exercises: Embedding API → Pinecone → Gemini LLM
   const ragRes = http.post(`${BASE_URL}/api/search`, payload, {
     headers,
     tags: { endpoint: "rag_search" },
-    timeout: "120s", // LLM calls may take time under load
+    timeout: "120s",
   });
 
   ragLatency.add(ragRes.timings.duration);
@@ -93,11 +73,8 @@ export default function () {
     },
   });
 
-  // Brief pause between the two API calls (simulates real user)
   sleep(0.5);
 
-  // ── 2. Keyword Search (POST /api/keyword-search) ────────
-  //    This exercises: Supabase DB query → in-memory filtering
   const kwRes = http.post(`${BASE_URL}/api/keyword-search`, payload, {
     headers,
     tags: { endpoint: "keyword_search" },
@@ -118,14 +95,9 @@ export default function () {
     },
   });
 
-  // Think-time between iterations (2–5 seconds, randomized)
-  // Spreads requests to avoid hitting API rate limits
   sleep(Math.random() * 3 + 2);
 }
 
-// ─────────────────────────────────────────────────────────────
-// Summary Handler — pretty-prints a recap at test end
-// ─────────────────────────────────────────────────────────────
 export function handleSummary(data) {
   const fmt = (v) => (typeof v === "number" ? v.toFixed(2) : "N/A");
 
@@ -152,12 +124,8 @@ export function handleSummary(data) {
   console.log(`║  Keyword     (p95):  ${fmt(kwVals["p(95)"]).padStart(10)} ms              ║`);
   console.log("╚══════════════════════════════════════════════════════════╝\n");
 
-  // Return the default stdout summary + an optional JSON file
   return {
     stdout: textSummary(data, { indent: " ", enableColors: true }),
     "load-test-results.json": JSON.stringify(data, null, 2),
   };
 }
-
-// k6 built-in helper for the text summary
-import { textSummary } from "https://jslib.k6.io/k6-summary/0.1.0/index.js";

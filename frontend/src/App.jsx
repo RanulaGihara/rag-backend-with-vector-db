@@ -8,8 +8,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // NEW: State to track which search engine we are using for the presentation
-  const [searchMode, setSearchMode] = useState("ai"); // 'ai' or 'keyword'
+  const [searchMode, setSearchMode] = useState("ai");
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -19,7 +18,6 @@ function App() {
     setError(null);
     setResult(null);
 
-    // NEW DYNAMIC ENDPOINT: Choose the API based on the selected mode
     const endpoint =
       searchMode === "ai"
         ? "http://localhost:5001/api/search"
@@ -49,7 +47,6 @@ function App() {
 
   return (
     <div className="app-wrapper">
-      {/* 1. Global Navbar */}
       <nav className="navbar">
         <div className="fluid-container nav-top">
           <div className="logo-text">Hotels.com</div>
@@ -82,7 +79,6 @@ function App() {
         </div>
       </nav>
 
-      {/* 2. Hero Section with Sri Lanka Beach Background */}
       <header className="hero">
         <div className="hero-overlay"></div>
         <div className="fluid-container hero-content">
@@ -92,9 +88,7 @@ function App() {
             stay!
           </p>
 
-          {/* 3. The Full-Width AI Search Bar */}
           <div className="search-section">
-            {/* NEW: Presentation Toggle Tabs (Sits right above the search bar) */}
             <div
               className="search-mode-tabs"
               style={{ display: "flex", gap: "10px", marginBottom: "10px" }}
@@ -145,9 +139,7 @@ function App() {
 
             <form onSubmit={handleSearch} className="search-form">
               <div className="search-inputs-wrapper">
-                {/* Main Semantic Input (Now takes 100% width) */}
                 <div className="input-box primary-input" style={{ flex: 1 }}>
-                  {/* Icon changes based on mode */}
                   <span className="search-icon">
                     {searchMode === "ai" ? "AI" : "KW"}
                   </span>
@@ -196,7 +188,6 @@ function App() {
 
       {error && <div className="error-banner">{error}</div>}
 
-      {/* 4. Default Content (Grid expanded to 8 items) */}
       {!result && !isLoading && !error && (
         <main className="default-content fluid-container">
           <div className="breadcrumbs">
@@ -271,14 +262,12 @@ function App() {
         </main>
       )}
 
-      {/* 5. Results Area with Fixed Card Layout */}
       {result && (
         <main className="results-container fluid-container">
           <div className="breadcrumbs">
             Home {">"} Hotels {">"} Sri Lanka {">"} Search Results
           </div>
 
-          {/* NEW: Only show the AI Banner if it's an AI Search */}
           {searchMode === "ai" && result.ai_answer && (
             <div className="ai-banner">
               <div className="ai-icon-wrapper">AI</div>
@@ -289,7 +278,6 @@ function App() {
             </div>
           )}
 
-          {/* NEW: Show a warning if standard search finds nothing */}
           {searchMode === "keyword" && result.source_documents.length === 0 && (
             <div
               className="ai-banner"
@@ -310,7 +298,6 @@ function App() {
 
           {result.source_documents && result.source_documents.length > 0 && (
             <div className="listings-wrapper">
-              {/* Dynamic Header */}
               <h2 className="listings-header">
                 {searchMode === "ai"
                   ? "Top matches for your request"
@@ -319,7 +306,6 @@ function App() {
 
               {result.source_documents.map((doc, index) => (
                 <div key={index} className="hotel-card">
-                  {/* Unique image per hotel */}
                   <img
                     src={doc.image || `https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=500&q=80`}
                     alt={doc.title}
@@ -344,7 +330,6 @@ function App() {
                             searchMode === "ai" ? "#0071c2" : "#666",
                         }}
                       >
-                        {/* Dynamic Description Note */}
                         {searchMode === "ai" ? (
                           <span>
                             <strong>AI Note:</strong> Selected based on

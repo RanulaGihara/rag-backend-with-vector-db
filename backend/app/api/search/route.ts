@@ -32,7 +32,6 @@ export async function POST(req: NextRequest) {
 
     const ragEngine = getRAGEngine();
 
-    // 1. Retrieve vector search results using core RAG engine
     const searchResults = await ragEngine.semanticSearch(query, {
       topK: 2,
       filter: { type: targetType },
@@ -55,7 +54,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 2. Application-layer Domain Prompt Engineering
     const wellnessSystemPrompt = `
 You are a highly empathetic Holistic Wellness Concierge & Mindful Living Specialist. 
 A user is seeking wellness products, therapeutic spa packages, or mindful retreat experiences to improve their physical, emotional, and mental well-being.
@@ -123,12 +121,11 @@ Your Matchmaker Response:
       systemPrompt = carSystemPrompt;
     }
 
-    // 3. Synthesize RAG response using core engine
     const aiAnswer = await ragEngine.generateRAGResponse(query, searchResults, {
       systemPrompt,
     });
 
-    const sourceDocuments = searchResults.map((item) => item.document.metadata);
+    const sourceDocuments = searchResults.map((item: any) => item.document.metadata);
 
     return NextResponse.json(
       {

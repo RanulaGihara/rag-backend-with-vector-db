@@ -10,9 +10,7 @@ export default function VoiceSearch({ onTranscript, disabled }) {
       if (recognitionRef.current) {
         try {
           recognitionRef.current.stop();
-        } catch (e) {
-          // ignore cleanup
-        }
+        } catch {}
       }
     };
   }, []);
@@ -34,9 +32,7 @@ export default function VoiceSearch({ onTranscript, disabled }) {
       if (recognitionRef.current) {
         try {
           recognitionRef.current.stop();
-        } catch (e) {
-          // ignore
-        }
+        } catch {}
       }
       setIsListening(false);
       return;

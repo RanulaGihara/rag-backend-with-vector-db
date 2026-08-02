@@ -15,7 +15,6 @@ export async function POST(req: NextRequest) {
   try {
     console.log("Starting Multi-Domain Data Ingestion via Next.js API Route...");
 
-    // 1. Fetch Hotel Data
     let hotels: any[] = [];
     const { data: hotelDbData, error: hotelErr } = await supabase.from("hotels").select("*");
     if (hotelErr || !hotelDbData || hotelDbData.length === 0) {
@@ -25,7 +24,6 @@ export async function POST(req: NextRequest) {
       hotels = hotelDbData;
     }
 
-    // 2. Fetch Car Data
     let cars: any[] = [];
     const { data: carDbData, error: carErr } = await supabase.from("cars").select("*");
     if (carErr || !carDbData || carDbData.length === 0) {
@@ -35,7 +33,6 @@ export async function POST(req: NextRequest) {
       cars = carDbData;
     }
 
-    // 3. Fetch Wellness Data
     let wellness: any[] = [];
     const { data: wellnessDbData, error: wellnessErr } = await supabase.from("wellness").select("*");
     if (wellnessErr || !wellnessDbData || wellnessDbData.length === 0) {
@@ -45,7 +42,6 @@ export async function POST(req: NextRequest) {
       wellness = wellnessDbData;
     }
 
-    // 4. Transform domain data into generic VectorDocument format
     const hotelDocs: VectorDocument[] = hotels.map((item) => ({
       id: String(item.id),
       text: `Title: ${item.title}\nExperience Description: ${item.description}`,
@@ -91,7 +87,6 @@ export async function POST(req: NextRequest) {
 
     const allDocs = [...hotelDocs, ...carDocs, ...wellnessDocs];
 
-    // 5. Ingest using core RAG engine
     const ragEngine = getRAGEngine();
     await ragEngine.ingest(allDocs);
 

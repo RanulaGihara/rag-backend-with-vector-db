@@ -49,7 +49,7 @@ export class RAGEngine {
   }
 
   /**
-   * Ingest generic vector documents into Pinecone index after generating embeddings.
+   * Ingest documents into the vector index.
    */
   async ingest(documents: VectorDocument[]): Promise<void> {
     if (documents.length === 0) {
@@ -72,7 +72,7 @@ export class RAGEngine {
   }
 
   /**
-   * Perform semantic similarity search in Pinecone DB using query embeddings.
+   * Perform vector similarity search.
    */
   async semanticSearch(
     query: string,
@@ -116,7 +116,7 @@ export class RAGEngine {
   }
 
   /**
-   * Synthesize a RAG response using Google Gemini LLM given a query and retrieved context documents.
+   * Generate a response using LLM given a query and context documents.
    */
   async generateRAGResponse(
     query: string,

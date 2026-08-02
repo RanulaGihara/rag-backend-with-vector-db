@@ -1,11 +1,6 @@
--- ============================================================================
--- Multi-Domain RAG Thesis Project - Supabase PostgreSQL Database Schema
--- ============================================================================
--- Research Thesis: Domain-Agnostic Retrieval-Augmented Generation (RAG)
--- Vector DB vs Keyword Matching Performance Evaluation
--- ============================================================================
+-- Supabase PostgreSQL Database Schema
 
--- 1. Hotels Table (Domain: Hotel Recommendation Engine)
+-- Hotels Table
 CREATE TABLE IF NOT EXISTS hotels (
     id TEXT PRIMARY KEY,
     title TEXT NOT NULL,
@@ -14,7 +9,7 @@ CREATE TABLE IF NOT EXISTS hotels (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 2. Cars Table (Domain: Car Rental Recommendation Engine)
+-- Cars Table
 CREATE TABLE IF NOT EXISTS cars (
     id TEXT PRIMARY KEY,
     title TEXT NOT NULL,
@@ -29,7 +24,7 @@ CREATE TABLE IF NOT EXISTS cars (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 3. Wellness Table (Domain: Wellness & Mindful Retreats Engine)
+-- Wellness Table
 CREATE TABLE IF NOT EXISTS wellness (
     id TEXT PRIMARY KEY,
     title TEXT NOT NULL,
@@ -42,9 +37,7 @@ CREATE TABLE IF NOT EXISTS wellness (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ============================================================================
--- Indexes for Keyword Search & Filtering Optimization
--- ============================================================================
+-- Full-text Search Indexes
 CREATE INDEX IF NOT EXISTS idx_hotels_title ON hotels USING gin (to_tsvector('english', title || ' ' || description));
 CREATE INDEX IF NOT EXISTS idx_cars_title ON cars USING gin (to_tsvector('english', title || ' ' || description || ' ' || category));
 CREATE INDEX IF NOT EXISTS idx_wellness_title ON wellness USING gin (to_tsvector('english', title || ' ' || description || ' ' || mindful_benefit));

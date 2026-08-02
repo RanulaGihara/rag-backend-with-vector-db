@@ -65,7 +65,6 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* 1. Navbar */}
       <nav className="navbar">
         <div className="fluid-container nav-top">
           <a href="#" className="brand-logo">
@@ -82,7 +81,6 @@ function App() {
         </div>
       </nav>
 
-      {/* 2. Hero Section */}
       <header className="hero">
         <div className="fluid-container hero-content">
           <div className="hero-badge">
@@ -93,9 +91,7 @@ function App() {
             Whether you desire a silent electric road cruiser, an aggressive track supercar, or a rugged 4x4 off-roader, match your emotional driving intent with our fleet.
           </p>
 
-          {/* 3. Search Box & Dual Search Toggle */}
           <div className="search-card">
-            {/* Mode Selector Tabs */}
             <div className="search-mode-tabs">
               <button
                 type="button"
@@ -121,7 +117,6 @@ function App() {
               </button>
             </div>
 
-            {/* Search Input Form */}
             <form onSubmit={handleSearch} className="search-form">
               <div className="input-group">
                 <span className="input-icon">
@@ -166,7 +161,6 @@ function App() {
               </button>
             </form>
 
-            {/* Sample Queries */}
             <div className="sample-queries">
               <span className="sample-label">Try asking:</span>
               {sampleQueries.map((sample, idx) => (
@@ -184,7 +178,6 @@ function App() {
         </div>
       </header>
 
-      {/* Main Content Area */}
       <main className="fluid-container" style={{ flex: 1, padding: "2rem 1.5rem" }}>
         {error && (
           <div className="error-banner">
@@ -193,7 +186,6 @@ function App() {
           </div>
         )}
 
-        {/* AI Synthesis Answer Box */}
         {result && searchMode === "ai" && result.ai_answer && (
           <div className="ai-summary-card">
             <div className="ai-card-header">
@@ -204,7 +196,6 @@ function App() {
           </div>
         )}
 
-        {/* Legacy Keyword Search Warning */}
         {result && searchMode === "keyword" && result.source_documents.length === 0 && (
           <div className="legacy-warning-card">
             <h3>No Exact Keyword Matches Found</h3>
@@ -214,7 +205,6 @@ function App() {
           </div>
         )}
 
-        {/* Vehicle Results Grid */}
         {result && result.source_documents && result.source_documents.length > 0 && (
           <div>
             <div className="section-header-row">
@@ -291,7 +281,6 @@ function App() {
           </div>
         )}
 
-        {/* Default Landing Grid when no search performed */}
         {!result && !isLoading && !error && (
           <section>
             <div className="section-header-row">
