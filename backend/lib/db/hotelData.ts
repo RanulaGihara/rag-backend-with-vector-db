@@ -86,4 +86,44 @@ export const hotelData: HotelItem[] = [
     image:
       "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=500&q=80",
   },
+  {
+    id: "HOTEL-011",
+    title: "Desert Bloom Courtyard",
+    description:
+      "An airy desert retreat with shaded courtyards, lantern-lit dinners, and sunrise yoga sessions. Ideal for travelers looking for calm, color, and warm evenings under the stars.",
+    image:
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=500&q=80",
+  },
+  {
+    id: "HOTEL-012",
+    title: "Harbor Light Boutique",
+    description:
+      "A chic waterfront stay with polished interiors, rooftop breakfasts, and a marina promenade just steps away. Perfect for couples, sailing weekends, and slow coastal mornings.",
+    image:
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=500&q=80",
+  },
+  {
+    id: "HOTEL-013",
+    title: "Lunar Grove Eco Cabin",
+    description:
+      "A sustainable woodland hideaway featuring recycled materials, outdoor soaking tubs, and stargazing decks. Great for eco-conscious guests seeking stillness and simplicity.",
+    image:
+      "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=500&q=80",
+  },
+  {
+    id: "HOTEL-014",
+    title: "Golden Hour Rooftop Residence",
+    description:
+      "A stylish rooftop residence with skyline views, private dining, and late-night city lights. Best for celebratory weekends and elevated urban escapes.",
+    image:
+      "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=500&q=80",
+  },
+  {
+    id: "HOTEL-015",
+    title: "Cedar & Stone Wellness Hideaway",
+    description:
+      "A restorative mountain retreat specializing in spa rituals, quiet tea lounges, and guided reflection walks. Perfect for wellness-focused guests and slow luxury escapes.",
+    image:
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=500&q=80",
+  },
 ];
